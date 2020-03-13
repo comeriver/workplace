@@ -1,0 +1,28 @@
+C:\Users\user\source\repos\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.csprojAssemblyReference.cache
+C:\Users\user\source\repos\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.Form1.resources
+C:\Users\user\source\repos\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.Properties.Resources.resources
+C:\Users\user\source\repos\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.csproj.GenerateResource.cache
+C:\Users\user\source\repos\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\advanced_ckey\advanced_ckey\bin\Debug\advanced_ckey.exe.config
+C:\Users\user\source\repos\advanced_ckey\advanced_ckey\bin\Debug\advanced_ckey.exe
+C:\Users\user\source\repos\advanced_ckey\advanced_ckey\bin\Debug\advanced_ckey.pdb
+C:\Users\user\source\repos\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.exe
+C:\Users\user\source\repos\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.pdb
+C:\Users\user\Desktop\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\bin\Debug\advanced_ckey.exe.config
+C:\Users\user\Desktop\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\bin\Debug\advanced_ckey.exe
+C:\Users\user\Desktop\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\bin\Debug\advanced_ckey.pdb
+C:\Users\user\Desktop\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.csprojAssemblyReference.cache
+C:\Users\user\Desktop\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.Form1.resources
+C:\Users\user\Desktop\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.Properties.Resources.resources
+C:\Users\user\Desktop\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.csproj.GenerateResource.cache
+C:\Users\user\Desktop\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.exe
+C:\Users\user\Desktop\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.pdb
+C:\Users\user\Documents\Visual Studio 2019\Projects\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\bin\Debug\advanced_ckey.exe.config
+C:\Users\user\Documents\Visual Studio 2019\Projects\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\bin\Debug\advanced_ckey.exe
+C:\Users\user\Documents\Visual Studio 2019\Projects\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\bin\Debug\advanced_ckey.pdb
+C:\Users\user\Documents\Visual Studio 2019\Projects\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.csprojAssemblyReference.cache
+C:\Users\user\Documents\Visual Studio 2019\Projects\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.Form1.resources
+C:\Users\user\Documents\Visual Studio 2019\Projects\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.Properties.Resources.resources
+C:\Users\user\Documents\Visual Studio 2019\Projects\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.csproj.GenerateResource.cache
+C:\Users\user\Documents\Visual Studio 2019\Projects\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.exe
+C:\Users\user\Documents\Visual Studio 2019\Projects\advanced_ckey-20200311T105414Z-001\advanced_ckey\advanced_ckey\obj\Debug\advanced_ckey.pdb
