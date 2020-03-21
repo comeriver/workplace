@@ -1,0 +1,32 @@
+Documentations on Employee Monitoring System
+This document contains the documentations of employee monitoring system. This document explains how the system works both on the server side and on the client side.
+Features of the system
+•	This software authenticates client before the system is started
+•	This software takes keystroke inputted into the client computer, creates and saves keystroke contents into a file in the client computers directory.
+•	This software takes screenshot of client computers system
+•	This software takes keystroke and screenshot file and sends to a server at specific time interval
+Functions of Program Modules on client’s computer
+A Module is in the form of a file that handles a specific task within a larger system software system. A Module can be programmed and tested independently. The Program modules to be developed in this system is:
+1.	A Login Module: This module is being designed to take client’s information before the system will began its work. The information collected includes: A web address, The client’s email and password. This detailed will be used to authenticate client’s information whether the client has his/her detailed already on the company’s server. If this is true, then the system can begin its functions. This login module appears only once. It would not show the module again as long as client already saved his/her details in the system.
+
+2.	Hides Folders: This system has the ability to hide secure folders (  i.e  hides where the screenshot and keystroke is saving to avoid being tampered with by clients  ).
+
+3.	Checks for task: This system has the ability to download project tasks from the server including starting and completion time. After downloading, the system prompts out tasks to be performed to each client computer system on startup task and prompts either (done or not) out again on completion time. After the client has chosen either done or not, The app sends reports back to the server.
+
+4.	Screenshot: This module is one of the functions of the system. This screenshot module captures the screenshot of client computer system if the system is started. The system starts automatically with the operating system installed on the computer system after it has been first launched.
+
+5.	Keystroke: This system takes keystroke of client’s computer and saved them to a file. A keystroke is basically keyboard keys that are pressed. Keystrokes are taken according to the window the client is working on. Capturing the present windows title and writing the keystroke under the window title taken. This keystroke taken are saved into a file on client computer system and on basics time interval sends file into a server.
+
+Functions of Program Modules on the server side using PageCarton
+
+PageCarton widgets will be used as the server side for this application. PageCarton uses widgets to interacts with the system and server.
+1.	A Widget used for posting screenshot and keystroke is created on the server side using PageCarton. Screenshot images and keystroke file is saved on this widget.
+
+2.	The project task is taken from the server side into client system. Form the client system, The system began prompting out tasks taken from the server to the client.
+
+3.	The screenshot and file taken from the client system is sent to the server. From the server, the manager or important people in the company can view the files sent in.
+
+
+
+
+

@@ -52,3 +52,17 @@ C:\Users\user\Desktop\advanced_ckey 1\advanced_ckey\obj\Debug\advanced_ckey.cspr
 C:\Users\user\Desktop\advanced_ckey 1\advanced_ckey\obj\Debug\advanced_ckey.csproj.CopyComplete
 C:\Users\user\Desktop\advanced_ckey 1\advanced_ckey\obj\Debug\advanced_ckey.exe
 C:\Users\user\Desktop\advanced_ckey 1\advanced_ckey\obj\Debug\advanced_ckey.pdb
+C:\Users\HOME\Desktop\workplace\advanced_ckey\bin\Debug\advanced_ckey.exe.config
+C:\Users\HOME\Desktop\workplace\advanced_ckey\bin\Debug\advanced_ckey.exe
+C:\Users\HOME\Desktop\workplace\advanced_ckey\bin\Debug\advanced_ckey.pdb
+C:\Users\HOME\Desktop\workplace\advanced_ckey\bin\Debug\Newtonsoft.Json.xml
+C:\Users\HOME\Desktop\workplace\advanced_ckey\obj\Debug\advanced_ckey.csprojAssemblyReference.cache
+C:\Users\HOME\Desktop\workplace\advanced_ckey\obj\Debug\advanced_ckey.Form1.resources
+C:\Users\HOME\Desktop\workplace\advanced_ckey\obj\Debug\advanced_ckey.Properties.Resources.resources
+C:\Users\HOME\Desktop\workplace\advanced_ckey\obj\Debug\advanced_ckey.csproj.GenerateResource.cache
+C:\Users\HOME\Desktop\workplace\advanced_ckey\obj\Debug\advanced_ckey.csproj.CoreCompileInputs.cache
+C:\Users\HOME\Desktop\workplace\advanced_ckey\obj\Debug\advanced_ckey.csproj.CopyComplete
+C:\Users\HOME\Desktop\workplace\advanced_ckey\obj\Debug\advanced_ckey.exe
+C:\Users\HOME\Desktop\workplace\advanced_ckey\obj\Debug\advanced_ckey.pdb
+C:\Users\HOME\Desktop\workplace\advanced_ckey\obj\Debug\advanced_ckey.Formlog.resources
+C:\Users\HOME\Desktop\workplace\advanced_ckey\bin\Debug\Newtonsoft.Json.dll
