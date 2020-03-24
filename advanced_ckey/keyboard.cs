@@ -217,6 +217,11 @@ namespace advanced_ckey
                         return null;
                     }
 
+                case object _ when 27 == Convert.ToInt32(e): //return null for escape
+                    {
+                        return null;
+                    }
+
                 case object _ when 33 == Convert.ToInt32(e): //works as pageup
                     {
                         return null;
@@ -271,20 +276,45 @@ namespace advanced_ckey
                         return null;
                     }
               
-                case object _ when 47 == Convert.ToInt32(e): //works as help
+                case object _ when 47 == Convert.ToInt32(e): //wors as left windows key
+                    {
+                        return null;
+                    }
+
+                case object _ when 91 == Convert.ToInt32(e): //works as right window key
+                    {
+                        return null;
+                    }
+
+                case object _ when 92 == Convert.ToInt32(e): //works as help
+                    {
+                        return null;
+                    }
+
+                case object _ when 93 == Convert.ToInt32(e): //works as application key
                     {
                         return null;
                     }
 
 
-                case object _ when 160 == Convert.ToInt32(e):
+                case object _ when 160 == Convert.ToInt32(e): //left shift key
                     {
                         return null;
                     }
 
-                case object _ when 161 == Convert.ToInt32(e):
+                case object _ when 161 == Convert.ToInt32(e): //rshift key
                     {
                         return null;
+                    }
+
+                case object _ when 162 == Convert.ToInt32(e): //left control key
+                    {
+                        return " < LcontrolKey > ";
+                    }
+
+                case object _ when 163 == Convert.ToInt32(e): //right control key
+                    {
+                        return " < RcontrolKey > ";
                     }
 
                 case object _ when 186 <= Convert.ToInt32(e) && Convert.ToInt32(e) <= 222:

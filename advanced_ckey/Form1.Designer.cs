@@ -32,8 +32,6 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.timer3 = new System.Windows.Forms.Timer(this.components);
             this.timer4 = new System.Windows.Forms.Timer(this.components);
             this.Sceenshot_timer = new System.Windows.Forms.Timer(this.components);
             this.keylog_timer = new System.Windows.Forms.Timer(this.components);
@@ -62,17 +60,6 @@
             this.timer1.Interval = 1;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // timer2
-            // 
-            this.timer2.Enabled = true;
-            this.timer2.Interval = 10000;
-            // 
-            // timer3
-            // 
-            this.timer3.Enabled = true;
-            this.timer3.Interval = 7000;
-            this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
-            // 
             // Sceenshot_timer
             // 
             this.Sceenshot_timer.Interval = 10000;
@@ -92,6 +79,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -100,8 +88,6 @@
 
         #endregion
         public System.Windows.Forms.Timer timer1;
-        public System.Windows.Forms.Timer timer2;
-        public System.Windows.Forms.Timer timer3;
         public System.Windows.Forms.Timer timer4;
         public System.Windows.Forms.TextBox textBox1;
         public System.Windows.Forms.TextBox textBox2;
