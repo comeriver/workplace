@@ -196,7 +196,7 @@
             this.txtweb.Name = "txtweb";
             this.txtweb.Size = new System.Drawing.Size(253, 28);
             this.txtweb.TabIndex = 1;
-            this.txtweb.Text = "e.g workplace.comeriver.com";
+            this.txtweb.Text = "workplace.comeriver.com";
             this.txtweb.Enter += new System.EventHandler(this.Txtweb_Enter);
             this.txtweb.Leave += new System.EventHandler(this.Txtweb_Leave);
             // 
@@ -234,7 +234,7 @@
             this.txtname.Name = "txtname";
             this.txtname.Size = new System.Drawing.Size(253, 24);
             this.txtname.TabIndex = 1;
-            this.txtname.Text = "e.g example@gmail.com";
+            this.txtname.Text = Properties.Settings.Default.username != string.Empty ? Properties.Settings.Default.username : "e.g example@gmail.com";
             this.txtname.Enter += new System.EventHandler(this.Txtname_Enter);
             this.txtname.Leave += new System.EventHandler(this.Txtname_Leave);
             // 
@@ -269,7 +269,7 @@
             this.txtpass.Name = "txtpass";
             this.txtpass.Size = new System.Drawing.Size(253, 19);
             this.txtpass.TabIndex = 11;
-            this.txtpass.Text = "******";
+            this.txtpass.Text =  Properties.Settings.Default.password != string.Empty ? Properties.Settings.Default.password : "******";
             this.txtpass.UseSystemPasswordChar = true;
             this.txtpass.Enter += new System.EventHandler(this.Txtpass_Enter_1);
             this.txtpass.Leave += new System.EventHandler(this.Txtpass_Leave);
@@ -310,7 +310,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Formlog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Formlog";
+            this.Text = "Login to Comeriver Workplace";
             this.Load += new System.EventHandler(this.Formlog_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

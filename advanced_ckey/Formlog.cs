@@ -10,7 +10,8 @@ using System.Windows.Forms;
 using System.IO;
 using Microsoft.Win32;
 using System.Net;
-
+using System.Json;
+using System.Text.Json;
 namespace advanced_ckey
 {
     public partial class Formlog : Form
@@ -32,11 +33,11 @@ namespace advanced_ckey
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            if (txtweb.Text == "e.g workplace.comeriver.com")
-            {
-                MessageBox.Show("Address Missing");
-                txtweb.Focus();
-                return;
+            if (txtweb.Text == "workplace.comeriver.com")
+            { 
+            //    MessageBox.Show("Address Missing");
+            //    txtweb.Focus();
+            //    return;
             }
                 if (txtname.Text == "e.g example@gmail.com")
                 {
@@ -52,38 +53,41 @@ namespace advanced_ckey
                 }
 
             try
-            {           
+            {
+                string URI = "https://" + txtweb.Text + "/widgets/Workplace_Authenticate?pc_widget_output_method=JSON";
+                string myParameters = "email=" + txtname.Text + "&password=" + txtpass.Text;
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(txtweb.Text);
-
-                request.Method = "POST"; //set method property
-
-                string requestParams = "username: " + txtuname.Text + "password: " + txtpass.Text;
-
-                byte[] byteArray = Encoding.UTF8.GetBytes(requestParams);  //converts it to byte array
-
-                request.ContentType = "application/x-www-form-urlencoded";  //content type property
-
-                request.ContentLength = byteArray.Length;  //sets content lenght of the request
-
-                using (Stream requestStream = request.GetRequestStream())
+                using (WebClient wc = new WebClient())
                 {
-                    requestStream.Write(byteArray, 0, byteArray.Length);
-                    requestStream.Close();
-                    //requestStream.Write(byteArray, 0, byteArray.Length);
-                }
+                    Properties.Settings.Default.username = txtname.Text;
+                    Properties.Settings.Default.password = txtpass.Text;
+                    Properties.Settings.Default.weburl = txtweb.Text;
+                    Properties.Settings.Default.Save();
+                    wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                    string jsonResponse = wc.UploadString(URI, myParameters);  
+                //    MessageBox.Show( jsonResponse ); 
+                    dynamic result = JsonValue.Parse( jsonResponse );
+                //    MessageBox.Show( result.badnews ); 
+                //    MessageBox.Show( result["auth_token"] ); 
 
-                // Get the response.
-                using (WebResponse response = request.GetResponse())
-                {
-                    using (Stream responseStream = response.GetResponseStream())
+                    string URIX = "https://" + txtweb.Text + "/widgets/Workplace_Screenshot_Save?pc_widget_output_method=JSON&";
+                    string myParametersX = "user_id=" + result["user_id"] + "&auth_token=" + result["auth_token"];
+                     //   MessageBox.Show( myParametersX ); 
+
+                    using (WebClient wcX = new WebClient())
                     {
-                        StreamReader rdr = new StreamReader(responseStream, Encoding.UTF8);
-                        string Json = rdr.ReadToEnd(); // response from server
-                        MessageBox.Show(Json);
+                        wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                        string jsonResponseX = wc.UploadString(URIX, myParametersX);  
+                    //    MessageBox.Show( jsonResponseX ); 
+                        dynamic resultX = JsonValue.Parse( jsonResponseX );
+                        MessageBox.Show( resultX["goodnews"] ); 
 
+                    //    MessageBox.Show( resultX["badnews"] ); 
                     }
+
+
                 }
+
             }
             catch (Exception ex)
             {
@@ -91,10 +95,6 @@ namespace advanced_ckey
                 return;
             }
 
-            Properties.Settings.Default.username = txtname.Text;
-            Properties.Settings.Default.password = txtpass.Text;
-            Properties.Settings.Default.weburl = txtweb.Text;
-            Properties.Settings.Default.Save();
 
 
             this.Hide();
@@ -190,11 +190,11 @@ namespace advanced_ckey
         private void Txtweb_Enter(object sender, EventArgs e)
         {
 
-            if (txtweb.Text == "e.g workplace.comeriver.com")
+            if (txtweb.Text == "workplace.comeriver.com")
             {
                 txtweb.Clear();
             }
-            if (txtweb.Text != "e.g workplace.comeriver.com")
+            if (txtweb.Text != "workplace.comeriver.com")
             {
                 txtweb.ForeColor = Color.Black;
             }
@@ -207,9 +207,9 @@ namespace advanced_ckey
 
             if (txtweb.Text == "")
             {
-                txtweb.Text = "e.g workplace.comeriver.com";
+                txtweb.Text = "workplace.comeriver.com";
             }
-            if (txtweb.Text != "e.g workplace.comeriver.com" ){ txtweb.ForeColor = Color.Black; } else { txtweb.ForeColor = Color.Silver; }
+            if (txtweb.Text != "workplace.comeriver.com" ){ txtweb.ForeColor = Color.Black; } else { txtweb.ForeColor = Color.Silver; }
         }
 
         private void Txtname_Enter(object sender, EventArgs e)
