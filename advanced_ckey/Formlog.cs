@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using Microsoft.Win32;
 using System.Net;
+using System.Net.Sockets;
 
 namespace advanced_ckey
 {
@@ -24,11 +25,15 @@ namespace advanced_ckey
         public const int HT_CAPTION = 0x2;
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]
+#pragma warning disable CA1401 // P/Invokes should not be visible
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+#pragma warning restore CA1401 // P/Invokes should not be visible
         [System.Runtime.InteropServices.DllImport("user32.dll")]
+#pragma warning disable CA1401 // P/Invokes should not be visible
         public static extern bool ReleaseCapture();
+#pragma warning restore CA1401 // P/Invokes should not be visible
 
-      
+        
 
         private void Button1_Click(object sender, EventArgs e)
         {
@@ -38,76 +43,57 @@ namespace advanced_ckey
                 txtweb.Focus();
                 return;
             }
-                if (txtname.Text == "e.g example@gmail.com")
-                {
-                    MessageBox.Show("Email Missing");
-                    txtname.Focus();
-                    return;
-                }
-                if (txtpass.Text == "******")
-                {
-                    MessageBox.Show("Password Missing");
-                    txtpass.Focus();
-                    return;
-                }
-
-            try
-            {           
-
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(txtweb.Text);
-
-                request.Method = "POST"; //set method property
-
-                string requestParams = "username: " + txtuname.Text + "password: " + txtpass.Text;
-
-                byte[] byteArray = Encoding.UTF8.GetBytes(requestParams);  //converts it to byte array
-
-                request.ContentType = "application/x-www-form-urlencoded";  //content type property
-
-                request.ContentLength = byteArray.Length;  //sets content lenght of the request
-
-                using (Stream requestStream = request.GetRequestStream())
-                {
-                    requestStream.Write(byteArray, 0, byteArray.Length);
-                    requestStream.Close();
-                    //requestStream.Write(byteArray, 0, byteArray.Length);
-                }
-
-                // Get the response.
-                using (WebResponse response = request.GetResponse())
-                {
-                    using (Stream responseStream = response.GetResponseStream())
-                    {
-                        StreamReader rdr = new StreamReader(responseStream, Encoding.UTF8);
-                        string Json = rdr.ReadToEnd(); // response from server
-                        MessageBox.Show(Json);
-
-                    }
-                }
-            }
-            catch (Exception ex)
+          
+            if (txtname.Text == "e.g example@gmail.com")
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Email Missing");
+                txtname.Focus();
+                return;
+            }
+            if (txtpass.Text == "******")
+            {
+                MessageBox.Show("Password Missing");
+                txtpass.Focus();
                 return;
             }
 
-            Properties.Settings.Default.username = txtname.Text;
-            Properties.Settings.Default.password = txtpass.Text;
-            Properties.Settings.Default.weburl = txtweb.Text;
-            Properties.Settings.Default.Save();
+            try
+            {
+
+                string URI = "https://" + txtweb.Text + "/widgets/Workplace_Authenticate?pc_widget_output_method=JSON&";
+                string myParameters = "email=" + txtname.Text + "&password=" + txtpass.Text;
+
+                using (WebClient wc = new WebClient())
+                {
+                    wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                    string jsonresponse = wc.UploadString(URI, myParameters);
+                    MessageBox.Show(jsonresponse);
+                    jsonData js = new jsonData();
+
+                    Newtonsoft.Json.JsonConvert.PopulateObject(jsonresponse, js);
 
 
-            this.Hide();
-            sign_in log = new sign_in();
-            log.ShowDialog();
-            this.Close();
+                    Properties.Settings.Default.user_id = js.user_id;
+                    Properties.Settings.Default.auth_token = js.auth_token;
 
+                    Properties.Settings.Default.username = txtname.Text;
+                    Properties.Settings.Default.password = txtpass.Text;
+                    Properties.Settings.Default.weburl = txtweb.Text;
+                    Properties.Settings.Default.Save();
+
+                    this.Hide();
+                    sign_in log = new sign_in();
+                    log.ShowDialog();
+                    this.Close();
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
-        private void Formlog_Load(object sender, EventArgs e)
+            private void Formlog_Load(object sender, EventArgs e)
         {
             startup();
-           Properties.Settings.Default.Reset(); 
+           //Properties.Settings.Default.Reset(); 
 
             if (Properties.Settings.Default.username != string.Empty && Properties.Settings.Default.password != string.Empty)
             {

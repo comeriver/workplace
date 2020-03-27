@@ -16,7 +16,7 @@ namespace advanced_ckey
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Formlog());
+            Application.Run(new Form1());
         }
     }
 }
