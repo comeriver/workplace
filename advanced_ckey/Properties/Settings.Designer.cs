@@ -82,5 +82,29 @@ namespace advanced_ckey.Properties {
                 this["weburl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string auth_token {
+            get {
+                return ((string)(this["auth_token"]));
+            }
+            set {
+                this["auth_token"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string user_id {
+            get {
+                return ((string)(this["user_id"]));
+            }
+            set {
+                this["user_id"] = value;
+            }
+        }
     }
 }
