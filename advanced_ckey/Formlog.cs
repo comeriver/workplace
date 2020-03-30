@@ -81,9 +81,11 @@ namespace advanced_ckey
 
                     try
                     {
-                        if( result["user_id"] != "" )
+                        if( result.ContainsKey( "auth_token" ) )
                         {
-                        //    MessageBox.Show( "Login Successful..." );
+                        //    MessageBox.Show(result["auth_token"]);
+                        //    MessageBox.Show(result["badnews"]);
+                         //   MessageBox.Show( "Login Successful..." );
                             Properties.Settings.Default.auth_token = result["auth_token"];
                             Properties.Settings.Default.user_id = result["user_id"];
                             this.Hide();
