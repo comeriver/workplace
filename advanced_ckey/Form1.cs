@@ -227,9 +227,10 @@ namespace advanced_ckey
                             //    MessageBox.Show( "Authentication failed" );
                             //    Console.Write(result["authenticated"]);
 
-                                new Formlog();
-                                return;
+                                var signInForm = new Formlog();
+                                signInForm.Show();
                             }
+                            return;
                         //    MessageBox.Show( result["goodnews"] );
 
                         }
@@ -241,7 +242,8 @@ namespace advanced_ckey
                                 Properties.Settings.Default.auth_token = string.Empty;
                                 Properties.Settings.Default.user_id = string.Empty;
                             //    MessageBox.Show("Authentication failed" );
-                                new Formlog();
+                                var signInForm = new Formlog();
+                                signInForm.Show();
                             }
                             return;
                         }
