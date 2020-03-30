@@ -66,12 +66,20 @@
             this.txtpass = new System.Windows.Forms.TextBox();
             this.panel6 = new System.Windows.Forms.Panel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel6.SuspendLayout();
+            this.panel7.SuspendLayout();
+            this.panel8.SuspendLayout();
             this.SuspendLayout();
             // 
             // uname
@@ -251,7 +259,6 @@
             this.txtname.Name = "txtname";
             this.txtname.Size = new System.Drawing.Size(253, 24);
             this.txtname.TabIndex = 1;
-            this.txtname.Text = Properties.Settings.Default.username != string.Empty ? Properties.Settings.Default.username : "e.g example@gmail.com";
             this.txtname.Enter += new System.EventHandler(this.Txtname_Enter);
             this.txtname.Leave += new System.EventHandler(this.Txtname_Leave);
             // 
@@ -286,7 +293,6 @@
             this.txtpass.Name = "txtpass";
             this.txtpass.Size = new System.Drawing.Size(253, 19);
             this.txtpass.TabIndex = 11;
-            this.txtpass.Text =  Properties.Settings.Default.password != string.Empty ? Properties.Settings.Default.password : "******";
             this.txtpass.UseSystemPasswordChar = true;
             this.txtpass.Enter += new System.EventHandler(this.Txtpass_Enter_1);
             this.txtpass.Leave += new System.EventHandler(this.Txtpass_Leave);
@@ -308,11 +314,88 @@
             this.timer1.Interval = 3000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // panel7
+            // 
+            this.panel7.BackColor = System.Drawing.SystemColors.Control;
+            this.panel7.Controls.Add(this.button2);
+            this.panel7.Controls.Add(this.checkedListBox1);
+            this.panel7.Controls.Add(this.panel8);
+            this.panel7.Location = new System.Drawing.Point(-1, 1);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(550, 397);
+            this.panel7.TabIndex = 13;
+            // 
+            // panel8
+            // 
+            this.panel8.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.panel8.Controls.Add(this.button4);
+            this.panel8.Controls.Add(this.label2);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel8.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.panel8.Location = new System.Drawing.Point(0, 0);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(550, 64);
+            this.panel8.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(88, 18);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(334, 33);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Choose Your WorkPlace";
+            // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkedListBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Items.AddRange(new object[] {
+            "ID23409  - - - MY REMOTE",
+            "ID30987 ----- MY CLOSE DESK"});
+            this.checkedListBox1.Location = new System.Drawing.Point(0, 64);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(550, 333);
+            this.checkedListBox1.TabIndex = 9;
+            // 
+            // button2
+            // 
+            this.button2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button2.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.button2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button2.Location = new System.Drawing.Point(0, 354);
+            this.button2.Margin = new System.Windows.Forms.Padding(5);
+            this.button2.Name = "button2";
+            this.button2.Padding = new System.Windows.Forms.Padding(5);
+            this.button2.Size = new System.Drawing.Size(550, 43);
+            this.button2.TabIndex = 10;
+            this.button2.Text = "CLOCK IN";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            // 
+            // button4
+            // 
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button4.Location = new System.Drawing.Point(454, 23);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 26);
+            this.button4.TabIndex = 1;
+            this.button4.Text = "Hide";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // Formlog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(550, 399);
+            this.Controls.Add(this.panel7);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel3);
@@ -341,6 +424,9 @@
             this.panel5.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
+            this.panel7.ResumeLayout(false);
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -368,5 +454,11 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.TextBox txtname;
         public System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button4;
     }
 }

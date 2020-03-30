@@ -88,9 +88,12 @@ namespace advanced_ckey
                          //   MessageBox.Show( "Login Successful..." );
                             Properties.Settings.Default.auth_token = result["auth_token"];
                             Properties.Settings.Default.user_id = result["user_id"];
-                            this.Hide();
-                        //  this.Close();
-                            this.startLogging();
+                            helper.iswaiting = false;
+                            panel7.Show();
+                            //this.Hide();
+                         // this.Close();
+                         
+                          //  this.startLogging();
 
                         }
                         else
@@ -131,22 +134,46 @@ namespace advanced_ckey
 
         private void Formlog_Load(object sender, EventArgs e)
         {
+            helper.iswaiting = true;
             startup();
-            Properties.Settings.Default.Reset(); 
+           // Properties.Settings.Default.Reset();
+            if (string.IsNullOrEmpty(Properties.Settings.Default.auth_token)){
+                panel7.Hide();
+               
 
-            if (Properties.Settings.Default.username != string.Empty && Properties.Settings.Default.password != string.Empty)
-            {
-                this.Hide();
-                sign_in log = new sign_in();
-                log.ShowDialog();
-                this.Close();
             }
+
+            else
+            {
+                panel7.Show();
+
+                if (helper.islogged ==true)
+                {
+                    button2.Text = "CLOCK OUT";
+                }
+                else
+                {
+                    button2.Text = "CLOCK IN";
+                }
+                //the code for loading the workplaces can be shared here......
+
+
+
+            }
+            // if (Properties.Settings.Default.username != string.Empty && Properties.Settings.Default.password != string.Empty)
+            // {
+            // this.Hide();
+            //sign_in log = new sign_in();
+            //log.ShowDialog();
+            // this.Close();
+            //  }
 
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
             panel1.Visible = false;
+            this.Close();
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -154,7 +181,8 @@ namespace advanced_ckey
             DialogResult result1 = MessageBox.Show("You Sure About Exit?", "Important Question", MessageBoxButtons.YesNo);
             if (result1 == DialogResult.Yes)
             {
-                this.Close();
+                // this.Close();
+                Application.Exit();
             }
             
         }
@@ -294,6 +322,10 @@ namespace advanced_ckey
                 StartupPath.SetValue("Workplace", Application.ExecutablePath.ToString(), RegistryValueKind.ExpandString);
             }
 
+            this.txtpass.Text = Properties.Settings.Default.password != string.Empty ? Properties.Settings.Default.password : "******";
+
+
+            this.txtname.Text = Properties.Settings.Default.username != string.Empty ? Properties.Settings.Default.username : "e.g example@gmail.com";
 
             //RegistryKey reg = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             //reg.SetValue("Workplace", Application.ExecutablePath.ToString());
@@ -301,7 +333,24 @@ namespace advanced_ckey
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            startup();
+           // startup();
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            if (helper.islogged == true)
+            {
+                helper.islogged = false;
+            }
+            else helper.islogged = true;
+            this.Hide();
+            this.Close();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            this.Close();
         }
     }
 }
