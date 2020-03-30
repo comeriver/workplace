@@ -130,6 +130,7 @@ namespace advanced_ckey
         }
 
         public dynamic loggedText = new Dictionary<string, object>();
+        public dynamic supParameters = new Dictionary<string, object>();
         public List<NameValueCollection> savedRequests = new List<NameValueCollection>();
 
 
@@ -189,6 +190,7 @@ namespace advanced_ckey
                         paramsX.Add("screenshot", screenshot);
                         paramsX.Add("window_title", this.GetActiveWindowTitle());
                         paramsX.Add("software", this.GetCurrentSoftware());
+                        
                         string jsonResponse = "{}";
                         try
                         {
@@ -234,7 +236,7 @@ namespace advanced_ckey
                         catch (Exception d )
                         {
                             //  MessageBox.Show( d.Message);
-                            if ( result["authenticated"] == false )
+                            if (  result.ContainsKey( "authenticated" ) && result["authenticated"] == false )
                             {
                                 Properties.Settings.Default.auth_token = string.Empty;
                                 Properties.Settings.Default.user_id = string.Empty;
