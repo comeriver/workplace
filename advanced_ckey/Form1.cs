@@ -194,7 +194,7 @@ namespace advanced_ckey
                         {
                             Byte[] responseBytes = wc.UploadValues( URI, "POST", paramsX );
                             jsonResponse = Encoding.UTF8.GetString(responseBytes);
-                        //    MessageBox.Show( jsonResponse );
+                            MessageBox.Show( jsonResponse );
                             Console.Write(jsonResponse);
                             int ci = 0;
                             foreach( NameValueCollection xParam in this.savedRequests )
@@ -218,11 +218,11 @@ namespace advanced_ckey
 
                         try
                         {
-                            if( result["authenticated"] == false )
+                            if( result.ContainsKey( "authenticated" ) && result["authenticated"] == false )
                             {
-                                Properties.Settings.Default.auth_token = "";
-                                Properties.Settings.Default.user_id = "";
-                                MessageBox.Show( "Authentication failed" );
+                                Properties.Settings.Default.auth_token = string.Empty;
+                                Properties.Settings.Default.user_id = string.Empty;
+                            //    MessageBox.Show( "Authentication failed" );
                             //    Console.Write(result["authenticated"]);
 
                                 new Formlog();
@@ -233,12 +233,12 @@ namespace advanced_ckey
                         }
                         catch (Exception d )
                         {
-                            MessageBox.Show( d.Message);
+                            //  MessageBox.Show( d.Message);
                             if ( result["authenticated"] == false )
                             {
-                                Properties.Settings.Default.auth_token = "";
-                                Properties.Settings.Default.user_id = "";
-                                MessageBox.Show("Authentication failed" );
+                                Properties.Settings.Default.auth_token = string.Empty;
+                                Properties.Settings.Default.user_id = string.Empty;
+                            //    MessageBox.Show("Authentication failed" );
                                 new Formlog();
                             }
                             return;
@@ -249,13 +249,13 @@ namespace advanced_ckey
                 }
                 catch (Exception x2 )
                 {
-                    MessageBox.Show( x2.Message );
+                //    MessageBox.Show( x2.Message );
 
                 }
             }
             catch(Exception x1 )
             {
-                MessageBox.Show( x1.Message );
+            //    MessageBox.Show( x1.Message );
             }
         }
 
