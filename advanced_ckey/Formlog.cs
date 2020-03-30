@@ -100,7 +100,7 @@ namespace advanced_ckey
                     }                     
                     catch (Exception)
                     {
-                        MessageBox.Show( result["badnews"] );
+                    //    MessageBox.Show( result["badnews"] );
                         return;
                     }
 
@@ -109,7 +109,7 @@ namespace advanced_ckey
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+            //    MessageBox.Show(ex.Message);
                 return;
             }
 
