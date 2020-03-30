@@ -196,8 +196,8 @@ namespace advanced_ckey
                         {
                             Byte[] responseBytes = wc.UploadValues( URI, "POST", paramsX );
                             jsonResponse = Encoding.UTF8.GetString(responseBytes);
-                            MessageBox.Show( jsonResponse );
-                            Console.Write(jsonResponse);
+                        //    MessageBox.Show( jsonResponse );
+                        //    Console.Write(jsonResponse);
                             int ci = 0;
                             foreach( NameValueCollection xParam in this.savedRequests )
                             {
