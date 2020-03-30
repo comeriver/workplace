@@ -99,6 +99,7 @@
     <Compile Include="Formlog.Designer.cs">
       <DependentUpon>Formlog.cs</DependentUpon>
     </Compile>
+    <Compile Include="helper.cs" />
     <Compile Include="keyboard.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
