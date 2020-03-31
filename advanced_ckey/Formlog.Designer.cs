@@ -278,7 +278,7 @@
             this.myWorkspaceLabel.Name = "myWorkspaceLabel";
             this.myWorkspaceLabel.Size = new System.Drawing.Size(180, 13);
             this.myWorkspaceLabel.TabIndex = 13;
-            this.myWorkspaceLabel.Text = "Select Teams to Connect With";
+            this.myWorkspaceLabel.Text = "Select workplace and Start Session";
             // 
             // button5
             // 

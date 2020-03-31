@@ -17,6 +17,7 @@ namespace advanced_ckey
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             helper.islogged = false;
+            helper.updateChecked = false;
             var k = Program.GetSignInForm();
             k.Show();
             var v = Program.GetClockInForm();
@@ -24,6 +25,8 @@ namespace advanced_ckey
             //    Program.signInForm.Hide();
             Application.Run( k );
         }
+
+        public static String VERSION = "0.1.1";
 
         public static Form1 GetSignInForm()
         {

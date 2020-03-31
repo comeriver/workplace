@@ -194,11 +194,12 @@ namespace advanced_ckey
                         catch ( Exception g )
                         {
                             this.savedRequests.Add( paramsX );
-                            Console.Write(g.Message);
+                         //   Console.Write(g.Message);
                         }
                         this.loggedText.Clear(); 
                         dynamic result = JsonValue.Parse(jsonResponse);
 
+                        helper.versioning(result);
 
                         try
                         {

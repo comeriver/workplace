@@ -116,13 +116,8 @@ namespace advanced_ckey
                             }
 
                             panel7.Show();
-                      
-                          //  this.startLogging();
+                            helper.versioning( result );
 
-                        }
-                        else
-                        {
-                            
                         }
                     }                     
                     catch (Exception r )
@@ -157,14 +152,6 @@ namespace advanced_ckey
             keylog.Show();
             keylog.Hide();
             timer1.Stop();
-        }
-
-        private void hideSignInFields()
-        {
-            panel1.Hide();
-            panel2.Hide();
-            panel3.Hide();
-            panel6.Hide();
         }
 
         private void Formlog_Load(object sender, EventArgs e)
