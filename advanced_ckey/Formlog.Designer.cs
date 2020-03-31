@@ -49,15 +49,10 @@
             this.uname = new System.Windows.Forms.Label();
             this.passw = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.url = new System.Windows.Forms.Label();
-            this.txturl = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.button3 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.Login = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.txtweb = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.txtname = new System.Windows.Forms.TextBox();
@@ -74,21 +69,26 @@
             this.button2 = new System.Windows.Forms.Button();
             this.panel8 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
+            this.url = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.txtweb = new System.Windows.Forms.TextBox();
+            this.txturl = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel8.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // uname
             // 
             this.uname.AutoSize = true;
             this.uname.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uname.Location = new System.Drawing.Point(25, 216);
+            this.uname.Location = new System.Drawing.Point(66, 216);
             this.uname.Name = "uname";
             this.uname.Size = new System.Drawing.Size(57, 24);
             this.uname.TabIndex = 0;
@@ -98,7 +98,7 @@
             // 
             this.passw.AutoSize = true;
             this.passw.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.passw.Location = new System.Drawing.Point(25, 260);
+            this.passw.Location = new System.Drawing.Point(32, 260);
             this.passw.Name = "passw";
             this.passw.Size = new System.Drawing.Size(92, 24);
             this.passw.TabIndex = 1;
@@ -118,28 +118,6 @@
             this.button1.Text = "Login";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
-            // 
-            // url
-            // 
-            this.url.AutoSize = true;
-            this.url.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.url.Location = new System.Drawing.Point(25, 164);
-            this.url.Name = "url";
-            this.url.Size = new System.Drawing.Size(125, 24);
-            this.url.TabIndex = 6;
-            this.url.Text = "Web Address";
-            // 
-            // txturl
-            // 
-            this.txturl.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txturl.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txturl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txturl.Location = new System.Drawing.Point(13, 9);
-            this.txturl.Multiline = true;
-            this.txturl.Name = "txturl";
-            this.txturl.Size = new System.Drawing.Size(253, 28);
-            this.txturl.TabIndex = 1;
-            this.txturl.Text = "e.g comeriver.com";
             // 
             // checkBox1
             // 
@@ -189,44 +167,6 @@
             this.Login.TabIndex = 0;
             this.Login.Text = "Comeriver Workplace";
             // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.White;
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.panel4);
-            this.panel2.Controls.Add(this.txturl);
-            this.panel2.Location = new System.Drawing.Point(156, 156);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(284, 43);
-            this.panel2.TabIndex = 8;
-            this.panel2.Click += new System.EventHandler(this.Panel2_Click);
-            // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.White;
-            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel4.Controls.Add(this.txtweb);
-            this.panel4.Location = new System.Drawing.Point(-1, -1);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(284, 43);
-            this.panel4.TabIndex = 9;
-            this.panel4.Click += new System.EventHandler(this.Panel4_Click_1);
-            // 
-            // txtweb
-            // 
-            this.txtweb.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtweb.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtweb.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtweb.ForeColor = System.Drawing.Color.Silver;
-            this.txtweb.Location = new System.Drawing.Point(13, 8);
-            this.txtweb.Multiline = true;
-            this.txtweb.Name = "txtweb";
-            this.txtweb.Size = new System.Drawing.Size(253, 28);
-            this.txtweb.TabIndex = 1;
-            this.txtweb.Text = "workplace.comeriver.com";
-            this.txtweb.Enter += new System.EventHandler(this.Txtweb_Enter);
-            this.txtweb.Leave += new System.EventHandler(this.Txtweb_Leave);
-            // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.White;
@@ -256,7 +196,7 @@
             this.txtname.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtname.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtname.ForeColor = System.Drawing.Color.Silver;
-            this.txtname.Location = new System.Drawing.Point(14, 10);
+            this.txtname.Location = new System.Drawing.Point(16, 9);
             this.txtname.Multiline = true;
             this.txtname.Name = "txtname";
             this.txtname.Size = new System.Drawing.Size(253, 24);
@@ -291,7 +231,7 @@
             this.txtpass.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtpass.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtpass.ForeColor = System.Drawing.Color.Silver;
-            this.txtpass.Location = new System.Drawing.Point(17, 10);
+            this.txtpass.Location = new System.Drawing.Point(17, 11);
             this.txtpass.Name = "txtpass";
             this.txtpass.Size = new System.Drawing.Size(253, 19);
             this.txtpass.TabIndex = 11;
@@ -336,9 +276,9 @@
             this.myWorkspaceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.myWorkspaceLabel.Location = new System.Drawing.Point(40, 89);
             this.myWorkspaceLabel.Name = "myWorkspaceLabel";
-            this.myWorkspaceLabel.Size = new System.Drawing.Size(185, 13);
+            this.myWorkspaceLabel.Size = new System.Drawing.Size(180, 13);
             this.myWorkspaceLabel.TabIndex = 13;
-            this.myWorkspaceLabel.Text = "Select a Team to Connect With";
+            this.myWorkspaceLabel.Text = "Select Teams to Connect With";
             // 
             // button5
             // 
@@ -415,6 +355,69 @@
             this.label2.Text = "Start your work session";
             this.label2.Click += new System.EventHandler(this.Label2_Click);
             // 
+            // url
+            // 
+            this.url.AutoSize = true;
+            this.url.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.url.Location = new System.Drawing.Point(59, 164);
+            this.url.Name = "url";
+            this.url.Size = new System.Drawing.Size(65, 24);
+            this.url.TabIndex = 6;
+            this.url.Text = "Server";
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.panel4);
+            this.panel2.Controls.Add(this.txturl);
+            this.panel2.Location = new System.Drawing.Point(156, 156);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(284, 43);
+            this.panel2.TabIndex = 8;
+            this.panel2.Click += new System.EventHandler(this.Panel2_Click);
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.White;
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.txtweb);
+            this.panel4.Location = new System.Drawing.Point(-1, -1);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(284, 43);
+            this.panel4.TabIndex = 9;
+            this.panel4.Click += new System.EventHandler(this.Panel4_Click_1);
+            // 
+            // txtweb
+            // 
+            this.txtweb.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtweb.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.txtweb.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtweb.Enabled = false;
+            this.txtweb.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtweb.ForeColor = System.Drawing.Color.Silver;
+            this.txtweb.Location = new System.Drawing.Point(15, 10);
+            this.txtweb.Multiline = true;
+            this.txtweb.Name = "txtweb";
+            this.txtweb.ReadOnly = true;
+            this.txtweb.Size = new System.Drawing.Size(253, 28);
+            this.txtweb.TabIndex = 1;
+            this.txtweb.Text = "workplace.comeriver.com";
+            this.txtweb.Enter += new System.EventHandler(this.Txtweb_Enter);
+            this.txtweb.Leave += new System.EventHandler(this.Txtweb_Leave);
+            // 
+            // txturl
+            // 
+            this.txturl.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txturl.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txturl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txturl.Location = new System.Drawing.Point(13, 9);
+            this.txturl.Multiline = true;
+            this.txturl.Name = "txturl";
+            this.txturl.Size = new System.Drawing.Size(253, 28);
+            this.txturl.TabIndex = 1;
+            this.txturl.Text = "e.g comeriver.com";
+            // 
             // Formlog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -439,10 +442,6 @@
             this.Load += new System.EventHandler(this.Formlog_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel5.ResumeLayout(false);
@@ -453,6 +452,10 @@
             this.panel7.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -463,18 +466,13 @@
         private System.Windows.Forms.Label uname;
         private System.Windows.Forms.Label passw;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label url;
-        private System.Windows.Forms.TextBox txturl;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label Login;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TextBox txtuname;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.TextBox txtweb;
         private System.Windows.Forms.TextBox txtpass;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel5;
@@ -488,5 +486,10 @@
         private System.Windows.Forms.CheckedListBox myWorkspaces;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Label myWorkspaceLabel;
+        private System.Windows.Forms.Label url;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.TextBox txtweb;
+        private System.Windows.Forms.TextBox txturl;
     }
 }

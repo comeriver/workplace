@@ -169,6 +169,7 @@ namespace advanced_ckey
         {
             helper.iswaiting = true;
             startup();
+
            // Properties.Settings.Default.Reset();
             if (string.IsNullOrEmpty(Properties.Settings.Default.auth_token))
             {
@@ -198,7 +199,7 @@ namespace advanced_ckey
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            DialogResult result1 = MessageBox.Show("You Sure About Exit?", "Exit Comeriver Workplace", MessageBoxButtons.YesNo);
+            DialogResult result1 = MessageBox.Show("Are you sure?", "Exit Comeriver Workplace", MessageBoxButtons.YesNo);
             if (result1 == DialogResult.Yes)
             {
                 // this.Close();
@@ -378,6 +379,12 @@ namespace advanced_ckey
             }
             else
             {
+                if( ! this.workspacesToGo.Any() )
+                {
+                    MessageBox.Show( "Please select a workplace to join" );
+                    return;
+                }
+
                 helper.islogged = true;
             }
             this.setClockButtons();
@@ -396,16 +403,16 @@ namespace advanced_ckey
 
         private void MyWorkspaces_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.workspacesToGo = null;
+            this.workspacesToGo.Clear();
             for (int i = 0; i < myWorkspaces.Items.Count; i++)
             {
                 if (myWorkspaces.GetItemChecked(i))
                 {
                     string str = (string)myWorkspaces.Items[i];
-                    MessageBox.Show(str);
+                //    MessageBox.Show(str);
                     if( this.workspaces.ContainsKey( str ) )
                     {
-                        string dic = this.workspaces["str"];
+                        string dic = this.workspaces[str];
                         this.workspacesToGo.Add( dic );
                     }
                 }
@@ -424,9 +431,12 @@ namespace advanced_ckey
             Properties.Settings.Default.user_id = String.Empty;
             Properties.Settings.Default.Save();
 
-            this.Hide();
-            this.Close();
+            Program.GetSignInForm().Hide();
+            Program.GetClockInForm().Hide();
+            Program.GetSignInForm().Close();
+            Program.GetClockInForm().Close();
             Program.GetSignInForm().Show();
+            Program.GetClockInForm().Show();
 
         }
     }

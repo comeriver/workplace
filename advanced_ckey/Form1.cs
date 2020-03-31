@@ -175,6 +175,7 @@ namespace advanced_ckey
                         {
                             Byte[] responseBytes = wc.UploadValues( URI, "POST", paramsX );
                             jsonResponse = Encoding.UTF8.GetString(responseBytes);
+                        //    MessageBox.Show( jsonResponse );
                             int ci = 0;
                             foreach( NameValueCollection xParam in this.savedRequests )
                             {
@@ -345,7 +346,7 @@ namespace advanced_ckey
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+        //    Application.Exit();
         }
 
        
