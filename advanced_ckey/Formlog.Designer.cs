@@ -46,6 +46,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Formlog));
             this.uname = new System.Windows.Forms.Label();
             this.passw = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -276,7 +277,7 @@
             this.myWorkspaceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.myWorkspaceLabel.Location = new System.Drawing.Point(40, 89);
             this.myWorkspaceLabel.Name = "myWorkspaceLabel";
-            this.myWorkspaceLabel.Size = new System.Drawing.Size(180, 13);
+            this.myWorkspaceLabel.Size = new System.Drawing.Size(209, 13);
             this.myWorkspaceLabel.TabIndex = 13;
             this.myWorkspaceLabel.Text = "Select workplace and Start Session";
             // 
@@ -436,6 +437,7 @@
             this.Controls.Add(this.passw);
             this.Controls.Add(this.uname);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Formlog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Comeriver Workplace";
