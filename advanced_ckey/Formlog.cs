@@ -110,7 +110,8 @@ namespace advanced_ckey
                             }
                             if (result.ContainsKey("interval"))
                             {
-                                Program.GetSignInForm().Sceenshot_timer.Interval = result["interval"] ? result["interval"] : 100;
+                                Program.GetSignInForm().Sceenshot_timer.Interval = ( result["interval"] ? result["interval"] : 60 ) * 1000;
+                                Console.Write(Program.GetSignInForm().Sceenshot_timer.Interval);
                             }
 
                             panel7.Show();
@@ -357,7 +358,7 @@ namespace advanced_ckey
            // startup();
         }
 
-        private void setClockButtons()
+        public void setClockButtons()
         {
             if (helper.islogged == false)
             {
@@ -371,7 +372,7 @@ namespace advanced_ckey
             }
         }
 
-        private void toggleClockButtons()
+        public void toggleClockButtons()
         {
             if (helper.islogged == true)
             {
@@ -425,19 +426,20 @@ namespace advanced_ckey
 
         }
 
-        private void LogOut(object sender, EventArgs e)
+        public void LogOutNow()
         {
             Properties.Settings.Default.auth_token = String.Empty;
             Properties.Settings.Default.user_id = String.Empty;
             Properties.Settings.Default.Save();
 
-            Program.GetSignInForm().Hide();
-            Program.GetClockInForm().Hide();
-            Program.GetSignInForm().Close();
-            Program.GetClockInForm().Close();
-            Program.GetSignInForm().Show();
-            Program.GetClockInForm().Show();
+            helper.islogged = false;
+            this.Close();
 
+        }
+
+        public void LogOut(object sender, EventArgs e)
+        {
+            this.LogOutNow();
         }
     }
 }

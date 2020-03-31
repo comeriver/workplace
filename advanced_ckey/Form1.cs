@@ -175,7 +175,7 @@ namespace advanced_ckey
                         {
                             Byte[] responseBytes = wc.UploadValues( URI, "POST", paramsX );
                             jsonResponse = Encoding.UTF8.GetString(responseBytes);
-                        //    MessageBox.Show( jsonResponse );
+                            //    MessageBox.Show( jsonResponse );
                             int ci = 0;
                             foreach( NameValueCollection xParam in this.savedRequests )
                             {
@@ -204,18 +204,12 @@ namespace advanced_ckey
                         {
                             if( result.ContainsKey( "authenticated" ) && result["authenticated"] == false )
                             {
-                                Properties.Settings.Default.auth_token = string.Empty;
-                                Properties.Settings.Default.user_id = string.Empty;
-                                if (helper.iswaiting == false)
-                                {
-                                    helper.islogged = false;
-                                    //  var k = new Formlog();
-                                    Program.GetSignInForm().Show();
-                                }
+                                
+                                Program.GetSignInForm().Show();
                                 return;
                             }
                             return;
-                        //    MessageBox.Show( result["goodnews"] );
+                            //    MessageBox.Show( result["goodnews"] );
 
                         }
                         catch (Exception ex )
@@ -223,16 +217,7 @@ namespace advanced_ckey
                             Console.Write(ex.Message);
                             if (  result.ContainsKey( "authenticated" ) && result["authenticated"] == false )
                             {
-                                Properties.Settings.Default.auth_token = string.Empty;
-                                Properties.Settings.Default.user_id = string.Empty;
-                              //  MessageBox.Show( "Authentication failed" );
-                                if (helper.iswaiting == false)
-                                {
-                                    helper.islogged = false;
-                                    //  var k = new Formlog();
-                                    Program.GetSignInForm().Show();
-                                }
-
+                                Program.GetClockInForm().LogOutNow();
                             }
                             return;
                         }
@@ -243,14 +228,16 @@ namespace advanced_ckey
                 catch (Exception r )
                 {
                     Console.Write(r.Message);
-
+/* 
                     if (helper.iswaiting == false)
                     {
                         helper.islogged = false;
+                        Program.GetClockInForm().setClockButtons();
                         //  var k = new Formlog();
                         Program.GetSignInForm().Show();
+
                     }
-                }
+ */                }
             }
             catch(Exception c )
             {
@@ -259,7 +246,7 @@ namespace advanced_ckey
                 if (helper.iswaiting == false)
                 {
                     helper.islogged = false;
-                    //  var k = new Formlog();
+                    Program.GetClockInForm().setClockButtons();
                     Program.GetSignInForm().Show();
                 }
                 // MessageBox.Show( x1.Message );
