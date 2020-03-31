@@ -101,11 +101,12 @@ namespace advanced_ckey
                                     }
                                 }
                                 Properties.Settings.Default.workspaces = JsonSerializer.Serialize( this.workspaces );
+                                Properties.Settings.Default.Save();
 
                             }
-                            else
+                            if( this.workspaces.Count() == 0 )
                             {
-                                MessageBox.Show( "Error! You don't have any workspaces on your account. Create a workspace on " + Properties.Settings.Default.weburl );
+                                MessageBox.Show( "Error! You don't have any confirmed workspace invitations on your account. Let your team leader create a workspace on " + Properties.Settings.Default.weburl + " and send you an invitation to " + Properties.Settings.Default.username );
                                 return;
                             }
                             if (result.ContainsKey("interval"))
