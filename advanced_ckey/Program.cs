@@ -19,7 +19,9 @@ namespace advanced_ckey
             helper.islogged = false;
             var k = Program.GetSignInForm();
             k.Show();
-        //    Program.signInForm.Hide();
+            var v = Program.GetClockInForm();
+            v.Show();
+            //    Program.signInForm.Hide();
             Application.Run( k );
         }
 

@@ -100,6 +100,8 @@ namespace advanced_ckey
                                         this.workspaces[a] = workspace.Key;
                                     }
                                 }
+                                Properties.Settings.Default.workspaces = JsonSerializer.Serialize( this.workspaces );
+
                             }
                             else
                             {
@@ -145,7 +147,7 @@ namespace advanced_ckey
         }
 
         public Dictionary<string, string> workspaces = new Dictionary<string, string>();
-        public string[] workspacesToGo = new string[] {};
+        public List<string> workspacesToGo = new List<string>();
 
         private void startLogging()
         {
@@ -180,13 +182,10 @@ namespace advanced_ckey
                 this.setClockButtons();
 
                 //  the code for loading the workplaces can be shared here......
-                for (int i = 0; i < myWorkspaces.Items.Count; i++)
+                this.workspaces = JsonSerializer.Deserialize<Dictionary<String, String>>( Properties.Settings.Default.workspaces );
+                foreach( var w in this.workspaces )
                 {
-                    if ( myWorkspaces.GetItemChecked(i) )
-                    {
-                        string str = (string) myWorkspaces.Items[i];
-                        MessageBox.Show(str);
-                    }
+                    this.myWorkspaces.Items.Add( w.Key );
                 }
             }
         }
@@ -357,27 +356,36 @@ namespace advanced_ckey
            // startup();
         }
 
-        private void setClockButtons( bool toggle = true )
+        private void setClockButtons()
+        {
+            if (helper.islogged == false)
+            {
+                this.label2.Text = "Start your work session";
+                button2.Text = "Start Session";
+            }
+            else
+            {
+                this.label2.Text = "Your work session is on";
+                button2.Text = "Clock Out";
+            }
+        }
+
+        private void toggleClockButtons()
         {
             if (helper.islogged == true)
             {
-                if( toggle )
                 helper.islogged = false;
-                this.label2.Text = "Start your work session";  
-                button2.Text = "Start Session";
             }
-            else 
+            else
             {
-                this.label2.Text = "Your work session is on";
-                button2.Text = "Clock Out";                
-                if( toggle )
                 helper.islogged = true;
             }
+            this.setClockButtons();
         }
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            this.setClockButtons();
+            this.toggleClockButtons();
         //    this.Hide();
         }
 
@@ -388,7 +396,21 @@ namespace advanced_ckey
 
         private void MyWorkspaces_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            this.workspacesToGo = null;
+            for (int i = 0; i < myWorkspaces.Items.Count; i++)
+            {
+                if (myWorkspaces.GetItemChecked(i))
+                {
+                    string str = (string)myWorkspaces.Items[i];
+                    MessageBox.Show(str);
+                    if( this.workspaces.ContainsKey( str ) )
+                    {
+                        string dic = this.workspaces["str"];
+                        this.workspacesToGo.Add( dic );
+                    }
+                }
+            }
+            Properties.Settings.Default.workspaces_to_go = JsonSerializer.Serialize( this.workspacesToGo );
         }
 
         private void Label2_Click(object sender, EventArgs e)
@@ -404,6 +426,7 @@ namespace advanced_ckey
 
             this.Hide();
             this.Close();
+            Program.GetSignInForm().Show();
 
         }
     }

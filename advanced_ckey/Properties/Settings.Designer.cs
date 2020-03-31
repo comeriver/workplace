@@ -130,5 +130,17 @@ namespace advanced_ckey.Properties {
                 this["interval"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string workspaces_to_go {
+            get {
+                return ((string)(this["workspaces_to_go"]));
+            }
+            set {
+                this["workspaces_to_go"] = value;
+            }
+        }
     }
 }

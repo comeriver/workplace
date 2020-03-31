@@ -164,9 +164,10 @@ namespace advanced_ckey
                         paramsX.Add("screenshot", screenshot);
                         paramsX.Add("window_title", this.GetActiveWindowTitle());
                         paramsX.Add("software", this.GetCurrentSoftware());
-                        if (Program.GetClockInForm().workspacesToGo != null && Program.GetClockInForm().workspacesToGo.Length != 0 )
+
+                        if ( Properties.Settings.Default.workspaces_to_go != String.Empty )
                         {
-                            paramsX.Add("workspaces", JsonSerializer.Serialize(Program.GetClockInForm().workspacesToGo ) );
+                            paramsX.Add( "workspaces", Properties.Settings.Default.workspaces_to_go );
                         }
 
                         string jsonResponse = "{}";
@@ -326,7 +327,7 @@ namespace advanced_ckey
 
         private void Sceenshot_timer_Tick(object sender, EventArgs e)
         {
-            if (helper.islogged ==true)
+            if (helper.islogged == true)
             {
                 screenshot();
             }
