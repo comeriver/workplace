@@ -18,7 +18,7 @@ namespace advanced_ckey
             Application.SetCompatibleTextRenderingDefault(false);
             helper.islogged = false;
             var k = Program.GetSignInForm();
-        //    k.Show();
+            k.Show();
         //    Program.signInForm.Hide();
             Application.Run( k );
         }

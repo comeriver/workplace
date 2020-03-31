@@ -57,10 +57,6 @@ namespace advanced_ckey
             }
         }
 
-       
-        private string strin = null;
-
-
         public string GetCurrentSoftware()  //get active windows title here
         {
             string software = "";
@@ -168,7 +164,11 @@ namespace advanced_ckey
                         paramsX.Add("screenshot", screenshot);
                         paramsX.Add("window_title", this.GetActiveWindowTitle());
                         paramsX.Add("software", this.GetCurrentSoftware());
-                        
+                        if (Program.GetClockInForm().workspacesToGo != null && Program.GetClockInForm().workspacesToGo.Length != 0 )
+                        {
+                            paramsX.Add("workspaces", JsonSerializer.Serialize(Program.GetClockInForm().workspacesToGo ) );
+                        }
+
                         string jsonResponse = "{}";
                         try
                         {
@@ -181,19 +181,20 @@ namespace advanced_ckey
                                 {
                                     wc.UploadValues(URI, "POST", xParam );
                                 }
-                                catch( Exception )
+                                catch( Exception dd )
                                 {
-
+                                    Console.Write(dd.Message);
                                 }
                                 this.savedRequests.RemoveAt( ci );
                                 ci++;
                             }
                         }
-                        catch ( Exception )
+                        catch ( Exception g )
                         {
                             this.savedRequests.Add( paramsX );
+                            Console.Write(g.Message);
                         }
-                        this.loggedText.Clear();
+                        this.loggedText.Clear(); 
                         dynamic result = JsonValue.Parse(jsonResponse);
 
 
@@ -215,9 +216,9 @@ namespace advanced_ckey
                         //    MessageBox.Show( result["goodnews"] );
 
                         }
-                        catch (Exception d )
+                        catch (Exception ex )
                         {
-                            //  MessageBox.Show( d.Message);
+                            Console.Write(ex.Message);
                             if (  result.ContainsKey( "authenticated" ) && result["authenticated"] == false )
                             {
                                 Properties.Settings.Default.auth_token = string.Empty;
@@ -237,19 +238,22 @@ namespace advanced_ckey
                     }
 
                 }
-                catch (Exception x2 )
+                catch (Exception r )
                 {
+                    Console.Write(r.Message);
+
                     if (helper.iswaiting == false)
                     {
                         helper.islogged = false;
                         //  var k = new Formlog();
                         Program.GetSignInForm().Show();
                     }
-                    // MessageBox.Show( x2.Message );
                 }
             }
-            catch(Exception x1 )
+            catch(Exception c )
             {
+                Console.Write(c.Message);
+
                 if (helper.iswaiting == false)
                 {
                     helper.islogged = false;
@@ -264,9 +268,6 @@ namespace advanced_ckey
         {
 
         }
-
-        DirectoryInfo ch;
-
 
         private void Form1_Load(object sender, EventArgs e)
         {

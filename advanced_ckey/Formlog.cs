@@ -83,16 +83,36 @@ namespace advanced_ckey
                     {
                         if( result.ContainsKey( "auth_token" ) )
                         {
-                        //    MessageBox.Show(result["auth_token"]);
-                        //    MessageBox.Show(result["badnews"]);
-                         //   MessageBox.Show( "Login Successful..." );
                             Properties.Settings.Default.auth_token = result["auth_token"];
                             Properties.Settings.Default.user_id = result["user_id"];
+                            Properties.Settings.Default.Save();
                             helper.iswaiting = false;
+
+                            //  set workspaces
+                            if( result.ContainsKey( "workspaces" ) )
+                            {
+                                foreach( var x in result["workspaces"] )
+                                {
+                                    foreach ( var workspace in x )
+                                    {
+                                        var a = string.Join("", workspace.Value) + " (Team ID " + workspace.Key + ")";
+                                        this.myWorkspaces.Items.Add( a );
+                                        this.workspaces[a] = workspace.Key;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show( "Error! You don't have any workspaces on your account. Create a workspace on " + Properties.Settings.Default.weburl );
+                                return;
+                            }
+                            if (result.ContainsKey("interval"))
+                            {
+                                Program.GetSignInForm().Sceenshot_timer.Interval = result["interval"] ? result["interval"] : 100;
+                            }
+
                             panel7.Show();
-                            //this.Hide();
-                         // this.Close();
-                         
+                      
                           //  this.startLogging();
 
                         }
@@ -101,9 +121,9 @@ namespace advanced_ckey
                             
                         }
                     }                     
-                    catch (Exception)
+                    catch (Exception r )
                     {
-                    //    MessageBox.Show( result["badnews"] );
+                        Console.Write(r.Message);
                         return;
                     }
 
@@ -112,7 +132,7 @@ namespace advanced_ckey
             }
             catch (Exception ex)
             {
-            //    MessageBox.Show(ex.Message);
+                Console.Write( ex.Message );
                 return;
             }
 
@@ -123,6 +143,9 @@ namespace advanced_ckey
         //    this.Close(); 
 
         }
+
+        public Dictionary<string, string> workspaces = new Dictionary<string, string>();
+        public string[] workspacesToGo = new string[] {};
 
         private void startLogging()
         {
@@ -154,18 +177,17 @@ namespace advanced_ckey
             {
                 panel7.Show();
 
-                if( helper.islogged == true )
-                {
-                    button2.Text = "Clock Out";
-                }
-                else
-                {
-                    button2.Text = "Clock In";
-                }
+                this.setClockButtons();
+
                 //  the code for loading the workplaces can be shared here......
-
-
-
+                for (int i = 0; i < myWorkspaces.Items.Count; i++)
+                {
+                    if ( myWorkspaces.GetItemChecked(i) )
+                    {
+                        string str = (string) myWorkspaces.Items[i];
+                        MessageBox.Show(str);
+                    }
+                }
             }
         }
 
@@ -177,7 +199,7 @@ namespace advanced_ckey
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            DialogResult result1 = MessageBox.Show("You Sure About Exit?", "Important Question", MessageBoxButtons.YesNo);
+            DialogResult result1 = MessageBox.Show("You Sure About Exit?", "Exit Comeriver Workplace", MessageBoxButtons.YesNo);
             if (result1 == DialogResult.Yes)
             {
                 // this.Close();
@@ -335,25 +357,54 @@ namespace advanced_ckey
            // startup();
         }
 
-        private void button2_Click_1(object sender, EventArgs e)
+        private void setClockButtons( bool toggle = true )
         {
             if (helper.islogged == true)
             {
+                if( toggle )
                 helper.islogged = false;
-                button2.Text = "Clock In";
+                this.label2.Text = "Start your work session";  
+                button2.Text = "Start Session";
             }
             else 
             {
+                this.label2.Text = "Your work session is on";
                 button2.Text = "Clock Out";                
+                if( toggle )
                 helper.islogged = true;
             }
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            this.setClockButtons();
         //    this.Hide();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             this.Hide();
-        //    this.Close();
+        }
+
+        private void MyWorkspaces_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LogOut(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.auth_token = String.Empty;
+            Properties.Settings.Default.user_id = String.Empty;
+            Properties.Settings.Default.Save();
+
+            this.Hide();
+            this.Close();
+
         }
     }
 }
