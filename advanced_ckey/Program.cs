@@ -16,12 +16,32 @@ namespace advanced_ckey
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            helper.islogged = true;
-            var t = new Form1();
-            
-            t.Show();
-            t.Hide();
-            Application.Run(t);
+            helper.islogged = false;
+            var k = Program.GetSignInForm();
+        //    k.Show();
+        //    Program.signInForm.Hide();
+            Application.Run( k );
         }
+
+        public static Form1 GetSignInForm()
+        {
+            if( Program.signInForm == null || Program.signInForm.IsDisposed )
+            {
+                Program.signInForm = new Form1();
+            }
+            return Program.signInForm;
+        }
+
+        public static Formlog GetClockInForm()
+        {
+            if( Program.clockInForm == null || Program.clockInForm.IsDisposed )
+            {
+                Program.clockInForm = new Formlog();
+            }
+            return Program.clockInForm;
+        }
+        public static Form1 signInForm;
+        public static Formlog clockInForm;
+
     }
 }

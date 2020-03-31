@@ -345,7 +345,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(334, 33);
             this.label2.TabIndex = 0;
-            this.label2.Text = "Choose Your WorkPlace";
+            this.label2.Text = "Choose your Workplace";
             // 
             // checkedListBox1
             // 
@@ -355,7 +355,7 @@
             this.checkedListBox1.Items.AddRange(new object[] {
             "ID23409  - - - MY REMOTE",
             "ID30987 ----- MY CLOSE DESK"});
-            this.checkedListBox1.Location = new System.Drawing.Point(0, 64);
+            this.checkedListBox1.Location = new System.Drawing.Point(64, 64);
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(550, 333);
             this.checkedListBox1.TabIndex = 9;
@@ -374,7 +374,7 @@
             this.button2.Padding = new System.Windows.Forms.Padding(5);
             this.button2.Size = new System.Drawing.Size(550, 43);
             this.button2.TabIndex = 10;
-            this.button2.Text = "CLOCK IN";
+            this.button2.Text = "Clock In";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
@@ -410,7 +410,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Formlog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Login to Comeriver Workplace";
+            this.Text = "Comeriver Workplace";
             this.Load += new System.EventHandler(this.Formlog_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

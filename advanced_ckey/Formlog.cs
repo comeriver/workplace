@@ -132,42 +132,41 @@ namespace advanced_ckey
             timer1.Stop();
         }
 
+        private void hideSignInFields()
+        {
+            panel1.Hide();
+            panel2.Hide();
+            panel3.Hide();
+            panel6.Hide();
+        }
+
         private void Formlog_Load(object sender, EventArgs e)
         {
             helper.iswaiting = true;
             startup();
            // Properties.Settings.Default.Reset();
-            if (string.IsNullOrEmpty(Properties.Settings.Default.auth_token)){
+            if (string.IsNullOrEmpty(Properties.Settings.Default.auth_token))
+            {
+
                 panel7.Hide();
-               
-
             }
-
             else
             {
                 panel7.Show();
 
-                if (helper.islogged ==true)
+                if( helper.islogged == true )
                 {
-                    button2.Text = "CLOCK OUT";
+                    button2.Text = "Clock Out";
                 }
                 else
                 {
-                    button2.Text = "CLOCK IN";
+                    button2.Text = "Clock In";
                 }
-                //the code for loading the workplaces can be shared here......
+                //  the code for loading the workplaces can be shared here......
 
 
 
             }
-            // if (Properties.Settings.Default.username != string.Empty && Properties.Settings.Default.password != string.Empty)
-            // {
-            // this.Hide();
-            //sign_in log = new sign_in();
-            //log.ShowDialog();
-            // this.Close();
-            //  }
-
         }
 
         private void Button2_Click(object sender, EventArgs e)
@@ -341,16 +340,20 @@ namespace advanced_ckey
             if (helper.islogged == true)
             {
                 helper.islogged = false;
+                button2.Text = "Clock In";
             }
-            else helper.islogged = true;
-            this.Hide();
-            this.Close();
+            else 
+            {
+                button2.Text = "Clock Out";                
+                helper.islogged = true;
+            }
+        //    this.Hide();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             this.Hide();
-            this.Close();
+        //    this.Close();
         }
     }
 }
