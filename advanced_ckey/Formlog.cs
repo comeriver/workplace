@@ -19,7 +19,6 @@ namespace advanced_ckey
         public Formlog()
         {
             // don't show if already logged in
-        //    MessageBox.Show( Properties.Settings.Default.auth_token );
             if( Properties.Settings.Default.auth_token != String.Empty )
             {
 
@@ -76,16 +75,19 @@ namespace advanced_ckey
                     Properties.Settings.Default.Save();
                     wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
                     string jsonResponse = "{}";
+                    string message = "Logging in into Workplace";
+                    Program.GetSignInForm().displayNotification(message);
                     try
                     {
                         jsonResponse = wc.UploadString(URI, myParameters);
                     }
                     catch( Exception )
                     {
-                        MessageBox.Show( "There seem to be a connection error. Ensure you have a working internet connection and try again" );
+                        message = "There seem to be a connection error. Ensure you have a working internet connection and try again";
+                        Program.GetSignInForm().displayNotification(message);
+                        MessageBox.Show( message );
                         return;
                     }
-                    //    MessageBox.Show( jsonResponse ); 
                     dynamic result = JsonValue.Parse( "{}" );
                     try
                     {
@@ -93,7 +95,9 @@ namespace advanced_ckey
                     }
                     catch (Exception)
                     {
-                        MessageBox.Show( "There seem to be a server error. Please try again later or contact support." );
+                        message = "There seem to be a server error. Please try again later or contact support.";
+                        Program.GetSignInForm().displayNotification(message);
+                        MessageBox.Show( message );
                         return;
                     }
 
@@ -105,6 +109,7 @@ namespace advanced_ckey
                         {
                             //  wrong username or password
                             MessageBox.Show( result["badnews"] );
+                            Program.GetSignInForm().displayNotification( result["badnews"] );
                             return;
                         }
 
@@ -133,7 +138,9 @@ namespace advanced_ckey
                             }
                             if( this.workspaces.Count() == 0 )
                             {
-                                MessageBox.Show( "Error! You don't have any confirmed workspace invitations on your account. Let your team leader create a workspace on " + Properties.Settings.Default.weburl + " and send you an invitation to " + Properties.Settings.Default.username );
+                                message = "Error! You don't have any confirmed workspace invitations on your account. Let your team leader create a workspace on " + Properties.Settings.Default.weburl + " and send you an invitation to " + Properties.Settings.Default.username;
+                                Program.GetSignInForm().displayNotification( result["badnews"] );
+                                MessageBox.Show( message );
                                 return;
                             }
                             if (result.ContainsKey("interval"))
@@ -143,7 +150,16 @@ namespace advanced_ckey
                             }
 
                             panel7.Show();
+                            message = "You have successfully logged into Workplace";
+                            Program.GetSignInForm().displayNotification(message);
 
+                        }
+                        else
+                        {
+                            message = "We couldn't authenticate with the information you provided. Please contact support.";
+                            Program.GetSignInForm().displayNotification(message);
+                            MessageBox.Show( message );
+                            return;
                         }
                     }                     
                     catch (Exception r )
@@ -188,12 +204,16 @@ namespace advanced_ckey
            // Properties.Settings.Default.Reset();
             if (string.IsNullOrEmpty(Properties.Settings.Default.auth_token))
             {
-
                 panel7.Hide();
+                string message = "Login into your workspace with your Workplace email and password";
+                Program.GetSignInForm().displayNotification(message);
             }
             else
             {
                 panel7.Show();
+
+                string message = "You are now logged into Workplace. You may now start a work session.";
+                Program.GetSignInForm().displayNotification(message);
 
                 this.setClockButtons();
 
@@ -217,6 +237,8 @@ namespace advanced_ckey
             DialogResult result1 = MessageBox.Show("Are you sure?", "Exit Comeriver Workplace", MessageBoxButtons.YesNo);
             if (result1 == DialogResult.Yes)
             {
+                string message = "Workplace is now closing.";
+                Program.GetSignInForm().displayNotification(message);
                 // this.Close();
                 Application.Exit();
             }
@@ -390,16 +412,22 @@ namespace advanced_ckey
         {
             if (helper.islogged == true)
             {
+                string message = "Your work session has now ended";
+                Program.GetSignInForm().displayNotification(message);
                 helper.islogged = false;
             }
             else
             {
-                if( ! this.workspacesToGo.Any() )
+                string message = "You have just started a work session in the selected workspaces.";
+                if ( ! this.workspacesToGo.Any() )
                 {
-                    MessageBox.Show( "Please select a workplace to join" );
+                    message = "Please select a workplace to join for team work";
+                    Program.GetSignInForm().displayNotification(message);
+                    MessageBox.Show( message );
                     return;
                 }
 
+                Program.GetSignInForm().displayNotification(message);
                 helper.islogged = true;
             }
             this.setClockButtons();
@@ -413,6 +441,8 @@ namespace advanced_ckey
 
         private void button4_Click(object sender, EventArgs e)
         {
+            string message = "Workplace is still running. Click the icon here to bring back the screen.";
+            Program.GetSignInForm().displayNotification(message);
             this.Hide();
         }
 
@@ -447,6 +477,8 @@ namespace advanced_ckey
             Properties.Settings.Default.Save();
 
             helper.islogged = false;
+            string message = "You have successfully logged out of Workplace";
+            Program.GetSignInForm().displayNotification(message);
             this.Close();
 
         }

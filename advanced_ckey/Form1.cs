@@ -177,18 +177,25 @@ namespace advanced_ckey
                             jsonResponse = Encoding.UTF8.GetString(responseBytes);
                             //    MessageBox.Show( jsonResponse );
                             int ci = 0;
-                            foreach( NameValueCollection xParam in this.savedRequests )
+
+                            if( this.savedRequests.Any() )
                             {
-                                try
+                                displayNotification( "Seems like you lost connection for a while. " +
+                                    "Now that you are back online, we will process your saved work requests.", 
+                                   "Welcome Back Online" );
+                                foreach (NameValueCollection xParam in this.savedRequests)
                                 {
-                                    wc.UploadValues(URI, "POST", xParam );
+                                    try
+                                    {
+                                        wc.UploadValues(URI, "POST", xParam);
+                                    }
+                                    catch (Exception dd)
+                                    {
+                                        Console.Write(dd.Message);
+                                    }
+                                    this.savedRequests.RemoveAt(ci);
+                                    ci++;
                                 }
-                                catch( Exception dd )
-                                {
-                                    Console.Write(dd.Message);
-                                }
-                                this.savedRequests.RemoveAt( ci );
-                                ci++;
                             }
                         }
                         catch ( Exception g )
@@ -205,7 +212,10 @@ namespace advanced_ckey
                         {
                             if( result.ContainsKey( "authenticated" ) && result["authenticated"] == false )
                             {
-                                
+                                string message = "Authentication failed. Please login again";
+                                displayNotification( message );
+                                MessageBox.Show( message );
+                                Program.GetClockInForm().LogOutNow();
                                 Program.GetSignInForm().Show();
                                 return;
                             }
@@ -218,7 +228,11 @@ namespace advanced_ckey
                             Console.Write(ex.Message);
                             if (  result.ContainsKey( "authenticated" ) && result["authenticated"] == false )
                             {
+                                string message = "Authentication failed. Please login again";
+                                displayNotification( message );
+                                MessageBox.Show( message );
                                 Program.GetClockInForm().LogOutNow();
+                                Program.GetSignInForm().Show();
                             }
                             return;
                         }
@@ -243,7 +257,6 @@ namespace advanced_ckey
             catch(Exception c )
             {
                 Console.Write(c.Message);
-
                 if (helper.iswaiting == false)
                 {
                     helper.islogged = false;
@@ -334,22 +347,23 @@ namespace advanced_ckey
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-        //    Application.Exit();
+
         }
 
-       
-        protected void Displaynotify()
+
+        public void displayNotification( string text, string title = "Workplace Notification", int time = 1000000 )
         {
             try
             {
-                notifyIcon1.Text = "Workplace";
+                notifyIcon1.Text = "Workplace Session";
                 notifyIcon1.Visible = true;
-                notifyIcon1.BalloonTipTitle = "Login or Change workplace";
-                notifyIcon1.BalloonTipText = "Change your workplace now";
-                notifyIcon1.ShowBalloonTip(1000000);
+                notifyIcon1.BalloonTipTitle = title;
+                notifyIcon1.BalloonTipText = text;
+                notifyIcon1.ShowBalloonTip( time );
             }
             catch (Exception)
             {
+
             }
         }
 
