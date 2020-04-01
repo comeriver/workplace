@@ -26,7 +26,7 @@ namespace advanced_ckey
             Application.Run( k );
         }
 
-        public static String VERSION = "0.1.1";
+        public static String VERSION = "0.1.2";
 
         public static Form1 GetSignInForm()
         {
