@@ -75,13 +75,40 @@ namespace advanced_ckey
                     Properties.Settings.Default.weburl = txtweb.Text;
                     Properties.Settings.Default.Save();
                     wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                    string jsonResponse = wc.UploadString(URI, myParameters);  
-                //    MessageBox.Show( jsonResponse ); 
-                    dynamic result = JsonValue.Parse( jsonResponse );
+                    string jsonResponse = "{}";
+                    try
+                    {
+                        jsonResponse = wc.UploadString(URI, myParameters);
+                    }
+                    catch( Exception )
+                    {
+                        MessageBox.Show( "There seem to be a connection error. Ensure you have a working internet connection and try again" );
+                        return;
+                    }
+                    //    MessageBox.Show( jsonResponse ); 
+                    dynamic result = JsonValue.Parse( "{}" );
+                    try
+                    {
+                        result = JsonValue.Parse(jsonResponse);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show( "There seem to be a server error. Please try again later or contact support." );
+                        return;
+                    }
 
                     try
                     {
-                        if( result.ContainsKey( "auth_token" ) )
+                        helper.versioning(result);
+
+                        if( result.ContainsKey( "badnews" ) )
+                        {
+                            //  wrong username or password
+                            MessageBox.Show( result["badnews"] );
+                            return;
+                        }
+
+                        if ( result.ContainsKey( "auth_token" ) )
                         {
                             Properties.Settings.Default.auth_token = result["auth_token"];
                             Properties.Settings.Default.user_id = result["user_id"];
@@ -116,7 +143,6 @@ namespace advanced_ckey
                             }
 
                             panel7.Show();
-                            helper.versioning( result );
 
                         }
                     }                     
