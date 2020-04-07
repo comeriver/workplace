@@ -119,12 +119,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="client_information.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="client_information.Designer.cs">
-      <DependentUpon>client_information.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dialog_class.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -142,15 +136,6 @@
     <Compile Include="keyboard.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="sign_in.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="sign_in.Designer.cs">
-      <DependentUpon>sign_in.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="client_information.resx">
-      <DependentUpon>client_information.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -166,9 +151,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="sign_in.resx">
-      <DependentUpon>sign_in.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>

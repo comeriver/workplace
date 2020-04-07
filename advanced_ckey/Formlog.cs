@@ -62,6 +62,8 @@ namespace advanced_ckey
                     return;
                 }
 
+            this.Cursor = Cursors.WaitCursor;
+            button1.Enabled = false;
             try
             {
                 string URI = "https://" + txtweb.Text + "/widgets/Workplace_Authenticate?pc_widget_output_method=JSON";
@@ -77,6 +79,7 @@ namespace advanced_ckey
                     string jsonResponse = "{}";
                     string message = "Logging in into Workplace";
                     Program.GetSignInForm().displayNotification(message);
+
                     try
                     {
                         jsonResponse = wc.UploadString(URI, myParameters);
@@ -85,18 +88,25 @@ namespace advanced_ckey
                     {
                         message = "There seem to be a connection error. Ensure you have a working internet connection and try again";
                         Program.GetSignInForm().displayNotification(message);
+                        Cursor = Cursors.Default;
+                        button1.Enabled = true;
                         MessageBox.Show( message );
                         return;
                     }
+
                     dynamic result = JsonValue.Parse( "{}" );
                     try
                     {
                         result = JsonValue.Parse(jsonResponse);
+
+                     //  MessageBox.Show("This is showing the result information" + result);
                     }
                     catch (Exception)
                     {
                         message = "There seem to be a server error. Please try again later or contact support.";
                         Program.GetSignInForm().displayNotification(message);
+                        Cursor = Cursors.Default;
+                        button1.Enabled = true;
                         MessageBox.Show( message );
                         return;
                     }
@@ -110,6 +120,8 @@ namespace advanced_ckey
                             //  wrong username or password
                             MessageBox.Show( result["badnews"] );
                             Program.GetSignInForm().displayNotification( result["badnews"] );
+                            Cursor = Cursors.Default;
+                            button1.Enabled = true;
                             return;
                         }
 
@@ -120,6 +132,8 @@ namespace advanced_ckey
                             Properties.Settings.Default.Save();
                             helper.iswaiting = false;
 
+                           
+
                             //  set workspaces
                             if( result.ContainsKey( "workspaces" ) )
                             {
@@ -128,28 +142,42 @@ namespace advanced_ckey
                                     foreach ( var workspace in x )
                                     {
                                         var a = string.Join("", workspace.Value) + " (Team ID " + workspace.Key + ")";
-                                        this.myWorkspaces.Items.Add( a );
-                                        this.workspaces[a] = workspace.Key;
+                                        myWorkspaces.Items.Add( a );
+                                        workspaces[a] = workspace.Key;
                                     }
                                 }
-                                Properties.Settings.Default.workspaces = JsonSerializer.Serialize( this.workspaces );
+                                Properties.Settings.Default.workspaces = JsonSerializer.Serialize( workspaces );
                                 Properties.Settings.Default.Save();
 
                             }
-                            if( this.workspaces.Count() == 0 )
+
+                            //marks this place
+                            try
                             {
-                                message = "Error! You don't have any confirmed workspace invitations on your account. Let your team leader create a workspace on " + Properties.Settings.Default.weburl + " and send you an invitation to " + Properties.Settings.Default.username;
-                                Program.GetSignInForm().displayNotification( result["badnews"] );
-                                MessageBox.Show( message );
-                                return;
+                                if (workspaces.Count == 0)
+                                {
+                                    message = "Error! You don't have any confirmed workspace invitations on your account. Let your team leader create a workspace on " + Properties.Settings.Default.weburl + " and send you an invitation to " + Properties.Settings.Default.username;
+                                    Program.GetSignInForm().displayNotification(result["badnews"]);
+                                    Cursor = Cursors.Default;
+                                    button1.Enabled = true;
+                                    MessageBox.Show(message);
+                                    return;
+
+                                }
+                            }catch(Exception)
+                            {
+                              //  MessageBox.Show(ex.Message);
                             }
+                          
                             if (result.ContainsKey("interval"))
                             {
                                 Program.GetSignInForm().Sceenshot_timer.Interval = ( result["interval"] ? result["interval"] : 60 ) * 1000;
-                                Console.Write(Program.GetSignInForm().Sceenshot_timer.Interval);
                             }
+                           
 
-                            panel7.Show();
+                            Cursor = Cursors.Default;
+                            button1.Enabled = true;
+                            panel7.Visible = true;
                             message = "You have successfully logged into Workplace";
                             Program.GetSignInForm().displayNotification(message);
 
@@ -158,12 +186,16 @@ namespace advanced_ckey
                         {
                             message = "We couldn't authenticate with the information you provided. Please contact support.";
                             Program.GetSignInForm().displayNotification(message);
+                            Cursor = Cursors.Default;
+                            button1.Enabled = true;
                             MessageBox.Show( message );
                             return;
                         }
                     }                     
                     catch (Exception r )
                     {
+                        Cursor = Cursors.Default;
+                        button1.Enabled = true;
                         Console.Write(r.Message);
                         return;
                     }
@@ -173,6 +205,8 @@ namespace advanced_ckey
             }
             catch (Exception ex)
             {
+                Cursor = Cursors.Default;
+                button1.Enabled = true;
                 Console.Write( ex.Message );
                 return;
             }
@@ -204,13 +238,13 @@ namespace advanced_ckey
            // Properties.Settings.Default.Reset();
             if (string.IsNullOrEmpty(Properties.Settings.Default.auth_token))
             {
-                panel7.Hide();
+                panel7.Visible = false;
                 string message = "Login into your workspace with your Workplace email and password";
                 Program.GetSignInForm().displayNotification(message);
             }
             else
             {
-                panel7.Show();
+                panel7.Visible = true;
 
                 string message = "You are now logged into Workplace. You may now start a work session.";
                 Program.GetSignInForm().displayNotification(message);
@@ -218,10 +252,10 @@ namespace advanced_ckey
                 this.setClockButtons();
 
                 //  the code for loading the workplaces can be shared here......
-                this.workspaces = JsonSerializer.Deserialize<Dictionary<String, String>>( Properties.Settings.Default.workspaces );
-                foreach( var w in this.workspaces )
+                workspaces = JsonSerializer.Deserialize<Dictionary<String, String>>( Properties.Settings.Default.workspaces );
+                foreach( var w in workspaces )
                 {
-                    this.myWorkspaces.Items.Add( w.Key );
+                    myWorkspaces.Items.Add( w.Key );
                 }
             }
         }
@@ -380,10 +414,10 @@ namespace advanced_ckey
                 StartupPath.SetValue("Workplace", Application.ExecutablePath.ToString(), RegistryValueKind.ExpandString);
             }
 
-            this.txtpass.Text = Properties.Settings.Default.password != string.Empty ? Properties.Settings.Default.password : "******";
+            txtpass.Text = Properties.Settings.Default.password != string.Empty ? Properties.Settings.Default.password : "******";
 
 
-            this.txtname.Text = Properties.Settings.Default.username != string.Empty ? Properties.Settings.Default.username : "e.g example@gmail.com";
+            txtname.Text = Properties.Settings.Default.username != string.Empty ? Properties.Settings.Default.username : "e.g example@gmail.com";
 
             //RegistryKey reg = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             //reg.SetValue("Workplace", Application.ExecutablePath.ToString());
@@ -398,13 +432,13 @@ namespace advanced_ckey
         {
             if (helper.islogged == false)
             {
-                this.label2.Text = "Start your work session";
-                button2.Text = "Start Session";
+                label2.Text = "Start your work session";
+                btnstartsession.Text = "Start Session";
             }
             else
             {
-                this.label2.Text = "Your work session is on";
-                button2.Text = "Clock Out";
+                label2.Text = "Your work session is on";
+                btnstartsession.Text = "Clock Out";
             }
         }
 
@@ -419,7 +453,7 @@ namespace advanced_ckey
             else
             {
                 string message = "You have just started a work session in the selected workspaces.";
-                if ( ! this.workspacesToGo.Any() )
+                if ( !workspacesToGo.Any() )
                 {
                     message = "Please select a workplace to join for team work";
                     Program.GetSignInForm().displayNotification(message);
@@ -430,12 +464,12 @@ namespace advanced_ckey
                 Program.GetSignInForm().displayNotification(message);
                 helper.islogged = true;
             }
-            this.setClockButtons();
+            setClockButtons();
         }
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            this.toggleClockButtons();
+            toggleClockButtons();
         //    this.Hide();
         }
 
@@ -455,10 +489,10 @@ namespace advanced_ckey
                 {
                     string str = (string)myWorkspaces.Items[i];
                 //    MessageBox.Show(str);
-                    if( this.workspaces.ContainsKey( str ) )
+                    if( workspaces.ContainsKey( str ) )
                     {
                         string dic = this.workspaces[str];
-                        this.workspacesToGo.Add( dic );
+                        workspacesToGo.Add( dic );
                     }
                 }
             }
@@ -479,13 +513,97 @@ namespace advanced_ckey
             helper.islogged = false;
             string message = "You have successfully logged out of Workplace";
             Program.GetSignInForm().displayNotification(message);
-            this.Close();
 
         }
 
         public void LogOut(object sender, EventArgs e)
         {
-            this.LogOutNow();
+            LogOutNow();
+            panel7.Visible = false;
+        }
+
+        private void button1_MouseHover(object sender, EventArgs e)
+        {
+            button1.BackColor =  Color.White;
+            button1.ForeColor = Color.Goldenrod;
+        }
+
+        private void button1_MouseLeave(object sender, EventArgs e)
+        {
+            button1.BackColor = Color.Goldenrod;
+            button1.ForeColor = Color.White;
+        }
+
+        private void button3_MouseHover(object sender, EventArgs e)
+        {
+            button3.BackColor = Color.Goldenrod;
+            button3.ForeColor = Color.White;
+        }
+
+        private void button3_MouseLeave(object sender, EventArgs e)
+        {
+            button3.BackColor = Color.White;
+            button3.ForeColor = Color.Goldenrod;
+        }
+
+        private void button2_MouseHover(object sender, EventArgs e)
+        {
+            btnstartsession.BackColor = SystemColors.Control;
+            btnstartsession.ForeColor = Color.Goldenrod;
+        }
+
+        private void button2_MouseLeave(object sender, EventArgs e)
+        {
+            btnstartsession.BackColor = Color.Goldenrod;
+            btnstartsession.ForeColor = Color.White;
+        }
+
+        private void btnhide_MouseHover(object sender, EventArgs e)
+        {
+            btnhide.ForeColor = Color.White;
+        }
+
+        private void btnhide_MouseLeave(object sender, EventArgs e)
+        {
+            btnhide.BackColor = SystemColors.Control;
+            btnhide.ForeColor = Color.Goldenrod;
+        }
+
+        private void btnlogout_MouseHover(object sender, EventArgs e)
+        {
+            btnlogout.ForeColor = Color.Goldenrod;
+        }
+
+        private void btnlogout_MouseLeave(object sender, EventArgs e)
+        {
+            btnlogout.ForeColor = Color.White;
+        }
+
+        private void panel8_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                visitLink();
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Unable to open link that was clicked.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void visitLink()
+        {
+            lblsupport.LinkVisited = true;
+            System.Diagnostics.Process.Start("http://www.workplace.comeriver.com");
         }
     }
 }

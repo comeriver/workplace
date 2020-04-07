@@ -64,10 +64,10 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel7 = new System.Windows.Forms.Panel();
             this.myWorkspaceLabel = new System.Windows.Forms.Label();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnlogout = new System.Windows.Forms.Button();
+            this.btnhide = new System.Windows.Forms.Button();
             this.myWorkspaces = new System.Windows.Forms.CheckedListBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnstartsession = new System.Windows.Forms.Button();
             this.panel8 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.url = new System.Windows.Forms.Label();
@@ -75,6 +75,7 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.txtweb = new System.Windows.Forms.TextBox();
             this.txturl = new System.Windows.Forms.TextBox();
+            this.lblsupport = new System.Windows.Forms.LinkLabel();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -89,7 +90,7 @@
             // 
             this.uname.AutoSize = true;
             this.uname.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uname.Location = new System.Drawing.Point(66, 216);
+            this.uname.Location = new System.Drawing.Point(66, 204);
             this.uname.Name = "uname";
             this.uname.Size = new System.Drawing.Size(57, 24);
             this.uname.TabIndex = 0;
@@ -99,7 +100,7 @@
             // 
             this.passw.AutoSize = true;
             this.passw.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.passw.Location = new System.Drawing.Point(32, 260);
+            this.passw.Location = new System.Drawing.Point(32, 248);
             this.passw.Name = "passw";
             this.passw.Size = new System.Drawing.Size(92, 24);
             this.passw.TabIndex = 1;
@@ -107,23 +108,26 @@
             // 
             // button1
             // 
-            this.button1.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.BackColor = System.Drawing.Color.Goldenrod;
+            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.button1.Location = new System.Drawing.Point(190, 321);
+            this.button1.Location = new System.Drawing.Point(190, 309);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(94, 38);
             this.button1.TabIndex = 4;
             this.button1.Text = "Login";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
+            this.button1.MouseLeave += new System.EventHandler(this.button1_MouseLeave);
+            this.button1.MouseHover += new System.EventHandler(this.button1_MouseHover);
             // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(446, 269);
+            this.checkBox1.Location = new System.Drawing.Point(446, 257);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(79, 17);
             this.checkBox1.TabIndex = 6;
@@ -133,22 +137,25 @@
             // 
             // button3
             // 
-            this.button3.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.button3.FlatAppearance.BorderSize = 0;
+            this.button3.BackColor = System.Drawing.SystemColors.Control;
+            this.button3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.button3.Location = new System.Drawing.Point(309, 321);
+            this.button3.ForeColor = System.Drawing.Color.Goldenrod;
+            this.button3.Location = new System.Drawing.Point(309, 309);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(96, 38);
             this.button3.TabIndex = 5;
             this.button3.Text = "Exit";
             this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.Button3_Click);
+            this.button3.MouseLeave += new System.EventHandler(this.button3_MouseLeave);
+            this.button3.MouseHover += new System.EventHandler(this.button3_MouseHover);
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.panel1.BackColor = System.Drawing.Color.Goldenrod;
             this.panel1.Controls.Add(this.Login);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.ForeColor = System.Drawing.SystemColors.ControlLight;
@@ -174,7 +181,7 @@
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel3.Controls.Add(this.panel5);
             this.panel3.Controls.Add(this.txtuname);
-            this.panel3.Location = new System.Drawing.Point(156, 205);
+            this.panel3.Location = new System.Drawing.Point(156, 193);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(284, 43);
             this.panel3.TabIndex = 9;
@@ -221,7 +228,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(152, 98);
+            this.label1.Location = new System.Drawing.Point(179, 98);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(192, 20);
             this.label1.TabIndex = 10;
@@ -245,7 +252,7 @@
             this.panel6.BackColor = System.Drawing.Color.White;
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel6.Controls.Add(this.txtpass);
-            this.panel6.Location = new System.Drawing.Point(156, 254);
+            this.panel6.Location = new System.Drawing.Point(156, 242);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(284, 43);
             this.panel6.TabIndex = 12;
@@ -261,14 +268,14 @@
             // 
             this.panel7.BackColor = System.Drawing.SystemColors.Window;
             this.panel7.Controls.Add(this.myWorkspaceLabel);
-            this.panel7.Controls.Add(this.button5);
-            this.panel7.Controls.Add(this.button4);
+            this.panel7.Controls.Add(this.btnlogout);
+            this.panel7.Controls.Add(this.btnhide);
             this.panel7.Controls.Add(this.myWorkspaces);
-            this.panel7.Controls.Add(this.button2);
+            this.panel7.Controls.Add(this.btnstartsession);
             this.panel7.Controls.Add(this.panel8);
-            this.panel7.Location = new System.Drawing.Point(-1, 1);
+            this.panel7.Location = new System.Drawing.Point(0, 0);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(550, 397);
+            this.panel7.Size = new System.Drawing.Size(550, 399);
             this.panel7.TabIndex = 13;
             // 
             // myWorkspaceLabel
@@ -281,29 +288,40 @@
             this.myWorkspaceLabel.TabIndex = 13;
             this.myWorkspaceLabel.Text = "Select workplace and Start Session";
             // 
-            // button5
+            // btnlogout
             // 
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button5.Location = new System.Drawing.Point(458, 320);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 43);
-            this.button5.TabIndex = 12;
-            this.button5.Text = "Log Out";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.LogOut);
+            this.btnlogout.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnlogout.FlatAppearance.BorderColor = System.Drawing.Color.Goldenrod;
+            this.btnlogout.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
+            this.btnlogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnlogout.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnlogout.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnlogout.Location = new System.Drawing.Point(458, 320);
+            this.btnlogout.Name = "btnlogout";
+            this.btnlogout.Size = new System.Drawing.Size(75, 43);
+            this.btnlogout.TabIndex = 12;
+            this.btnlogout.Text = "Log Out";
+            this.btnlogout.UseVisualStyleBackColor = false;
+            this.btnlogout.Click += new System.EventHandler(this.LogOut);
+            this.btnlogout.MouseLeave += new System.EventHandler(this.btnlogout_MouseLeave);
+            this.btnlogout.MouseHover += new System.EventHandler(this.btnlogout_MouseHover);
             // 
-            // button4
+            // btnhide
             // 
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button4.Location = new System.Drawing.Point(366, 320);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 43);
-            this.button4.TabIndex = 1;
-            this.button4.Text = "Hide";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.btnhide.BackColor = System.Drawing.Color.White;
+            this.btnhide.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Goldenrod;
+            this.btnhide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnhide.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnhide.ForeColor = System.Drawing.Color.Goldenrod;
+            this.btnhide.Location = new System.Drawing.Point(366, 320);
+            this.btnhide.Name = "btnhide";
+            this.btnhide.Size = new System.Drawing.Size(75, 43);
+            this.btnhide.TabIndex = 1;
+            this.btnhide.Text = "Hide";
+            this.btnhide.UseVisualStyleBackColor = false;
+            this.btnhide.Click += new System.EventHandler(this.button4_Click);
+            this.btnhide.MouseLeave += new System.EventHandler(this.btnhide_MouseLeave);
+            this.btnhide.MouseHover += new System.EventHandler(this.btnhide_MouseHover);
             // 
             // myWorkspaces
             // 
@@ -317,26 +335,30 @@
             this.myWorkspaces.TabIndex = 11;
             this.myWorkspaces.SelectedIndexChanged += new System.EventHandler(this.MyWorkspaces_SelectedIndexChanged);
             // 
-            // button2
+            // btnstartsession
             // 
-            this.button2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button2.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button2.Location = new System.Drawing.Point(15, 320);
-            this.button2.Margin = new System.Windows.Forms.Padding(5);
-            this.button2.Name = "button2";
-            this.button2.Padding = new System.Windows.Forms.Padding(5);
-            this.button2.Size = new System.Drawing.Size(322, 43);
-            this.button2.TabIndex = 10;
-            this.button2.Text = "Start Session";
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            this.btnstartsession.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnstartsession.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnstartsession.FlatAppearance.BorderColor = System.Drawing.Color.Goldenrod;
+            this.btnstartsession.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
+            this.btnstartsession.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnstartsession.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnstartsession.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnstartsession.Location = new System.Drawing.Point(15, 320);
+            this.btnstartsession.Margin = new System.Windows.Forms.Padding(5);
+            this.btnstartsession.Name = "btnstartsession";
+            this.btnstartsession.Padding = new System.Windows.Forms.Padding(5);
+            this.btnstartsession.Size = new System.Drawing.Size(322, 43);
+            this.btnstartsession.TabIndex = 10;
+            this.btnstartsession.Text = "Start Session";
+            this.btnstartsession.UseVisualStyleBackColor = false;
+            this.btnstartsession.Click += new System.EventHandler(this.button2_Click_1);
+            this.btnstartsession.MouseLeave += new System.EventHandler(this.button2_MouseLeave);
+            this.btnstartsession.MouseHover += new System.EventHandler(this.button2_MouseHover);
             // 
             // panel8
             // 
-            this.panel8.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.panel8.BackColor = System.Drawing.Color.Goldenrod;
             this.panel8.Controls.Add(this.label2);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel8.ForeColor = System.Drawing.SystemColors.ControlLight;
@@ -344,12 +366,13 @@
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(550, 64);
             this.panel8.TabIndex = 8;
+            this.panel8.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel8_MouseDown);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(98, 15);
+            this.label2.Location = new System.Drawing.Point(116, 15);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(319, 33);
             this.label2.TabIndex = 0;
@@ -360,7 +383,7 @@
             // 
             this.url.AutoSize = true;
             this.url.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.url.Location = new System.Drawing.Point(59, 164);
+            this.url.Location = new System.Drawing.Point(59, 152);
             this.url.Name = "url";
             this.url.Size = new System.Drawing.Size(65, 24);
             this.url.TabIndex = 6;
@@ -372,7 +395,7 @@
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.panel4);
             this.panel2.Controls.Add(this.txturl);
-            this.panel2.Location = new System.Drawing.Point(156, 156);
+            this.panel2.Location = new System.Drawing.Point(156, 144);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(284, 43);
             this.panel2.TabIndex = 8;
@@ -419,11 +442,24 @@
             this.txturl.TabIndex = 1;
             this.txturl.Text = "e.g comeriver.com";
             // 
+            // lblsupport
+            // 
+            this.lblsupport.AutoSize = true;
+            this.lblsupport.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblsupport.Location = new System.Drawing.Point(12, 377);
+            this.lblsupport.Name = "lblsupport";
+            this.lblsupport.Size = new System.Drawing.Size(55, 13);
+            this.lblsupport.TabIndex = 14;
+            this.lblsupport.TabStop = true;
+            this.lblsupport.Text = "Suppports";
+            this.lblsupport.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // Formlog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(550, 399);
+            this.Controls.Add(this.lblsupport);
             this.Controls.Add(this.panel7);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.label1);
@@ -481,17 +517,18 @@
         private System.Windows.Forms.TextBox txtname;
         public System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnstartsession;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnhide;
         private System.Windows.Forms.CheckedListBox myWorkspaces;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnlogout;
         private System.Windows.Forms.Label myWorkspaceLabel;
         private System.Windows.Forms.Label url;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TextBox txtweb;
         private System.Windows.Forms.TextBox txturl;
+        private System.Windows.Forms.LinkLabel lblsupport;
     }
 }
