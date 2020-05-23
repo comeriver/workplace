@@ -12,6 +12,8 @@ using Microsoft.Win32;
 using System.Net;
 using System.Json;
 using System.Text.Json;
+using Newtonsoft.Json.Linq;
+
 namespace advanced_ckey
 {
     public partial class Formlog : Form
@@ -85,7 +87,7 @@ namespace advanced_ckey
                     catch ( Exception )
                     {
                         Program.online = false;
-                        message = "There seem to be a connection error. Ensure you have a working internet connection and try again";
+                        message = "We got an invalid response from the server. Please contact Workplace Support.";
                         Program.GetSignInForm().displayNotification(message);
                         MessageBox.Show( message );
                         return;
@@ -93,7 +95,7 @@ namespace advanced_ckey
                     dynamic result = JsonValue.Parse( "{}" );
                     try
                     {
-                        result = JsonValue.Parse(jsonResponse);
+                        result = JsonValue.Parse( jsonResponse );
                     }
                     catch (Exception)
                     {
@@ -151,7 +153,7 @@ namespace advanced_ckey
                             if ( this.workspaces.Count() == 0 )
                             {
                                 message = "Error! You don't have any confirmed workspace invitations on your account. Let your team leader create a workspace on " + Properties.Settings.Default.weburl + " and send you an invitation to " + Properties.Settings.Default.username;
-                                Program.GetSignInForm().displayNotification( result["badnews"] );
+                                Program.GetSignInForm().displayNotification(message);
                                 MessageBox.Show( message );
                                 return;
                             }
