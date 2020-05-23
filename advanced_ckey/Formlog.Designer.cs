@@ -494,4 +494,4 @@
         private System.Windows.Forms.TextBox txtweb;
         private System.Windows.Forms.TextBox txturl;
     }
-}
+} 
