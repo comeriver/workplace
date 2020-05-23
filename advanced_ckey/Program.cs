@@ -47,6 +47,7 @@ namespace advanced_ckey
         }
         public static Form1 signInForm;
         public static Formlog clockInForm;
+        public static bool online  = false;
 
     }
 }

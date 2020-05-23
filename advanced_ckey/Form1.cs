@@ -126,6 +126,7 @@ namespace advanced_ckey
         public dynamic loggedText = new Dictionary<string, object>();
         public dynamic supParameters = new Dictionary<string, object>();
         public List<NameValueCollection> savedRequests = new List<NameValueCollection>();
+        public bool processingSavedRequests = false;
 
 
         public void screenshot()  // the method that handles the screenshot
@@ -149,6 +150,7 @@ namespace advanced_ckey
                 }
 
                 string keystrokes = JsonSerializer.Serialize(this.loggedText);
+                this.loggedText.Clear();
                 try
                 {
                     string URI = "https://" + Properties.Settings.Default.weburl + "/widgets/Workplace_Log?pc_widget_output_method=JSON";
@@ -174,36 +176,23 @@ namespace advanced_ckey
                         try
                         {
                             Byte[] responseBytes = wc.UploadValues( URI, "POST", paramsX );
+                            Program.online = true;
                             jsonResponse = Encoding.UTF8.GetString(responseBytes);
                             //    MessageBox.Show( jsonResponse );
-                            int ci = 0;
 
-                            if( this.savedRequests.Any() )
-                            {
-                                displayNotification( "Seems like you lost connection for a while. " +
-                                    "Now that you are back online, we will process your saved work requests.", 
-                                   "Welcome Back Online" );
-                                foreach (NameValueCollection xParam in this.savedRequests)
-                                {
-                                    try
-                                    {
-                                        wc.UploadValues(URI, "POST", xParam);
-                                    }
-                                    catch (Exception dd)
-                                    {
-                                        Console.Write(dd.Message);
-                                    }
-                                    this.savedRequests.RemoveAt(ci);
-                                    ci++;
-                                }
-                            }
                         }
                         catch ( Exception g )
                         {
+                            if( Program.online )
+                            {
+                                displayNotification( "Seems like you are not online. " +
+                                    "Your work will continue to be saved and processed when you get back online",
+                                   "Now Working Offline" );
+                                Program.online = false;
+                            }
                             this.savedRequests.Add( paramsX );
-                         //   Console.Write(g.Message);
+                            return;
                         }
-                        this.loggedText.Clear(); 
                         dynamic result = JsonValue.Parse(jsonResponse);
 
                         helper.versioning(result);
@@ -219,13 +208,10 @@ namespace advanced_ckey
                                 Program.GetSignInForm().Show();
                                 return;
                             }
-                            return;
-                            //    MessageBox.Show( result["goodnews"] );
-
                         }
                         catch (Exception ex )
                         {
-                            Console.Write(ex.Message);
+                            Console.WriteLine(ex.Message);
                             if (  result.ContainsKey( "authenticated" ) && result["authenticated"] == false )
                             {
                                 string message = "Authentication failed. Please login again";
@@ -236,6 +222,47 @@ namespace advanced_ckey
                             }
                             return;
                         }
+                        if( this.savedRequests.Any() && processingSavedRequests == false )
+                        {
+                            processingSavedRequests = true;
+                            displayNotification("Seems like you lost connection for a while. " +
+                                "Now that you are back online, we will process your " +
+                                "" + this.savedRequests.Count() + " saved work requests.",
+                               "Welcome Back Online");
+                            int ci = 0;
+                            foreach (NameValueCollection xParam in this.savedRequests.ToArray() )
+                            {
+                                try
+                                {
+
+                                    using (WebClient wcX = new WebClient())
+                                    {
+                                        wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                                        Byte[] savedResponse = wcX.UploadValues(URI, "POST", xParam);
+                                    }
+                                    Console.WriteLine("Processed saved request " + ci);
+                                }
+                                catch (Exception dd)
+                                {
+                                    Console.WriteLine( "We were unable to process this saved request " + ci );
+                                    Console.WriteLine(dd.Message);
+                                    break;
+                                }
+                                var t = this.savedRequests.IndexOf(xParam);
+                                try
+                                {
+                                    this.savedRequests.RemoveAt(t);
+                                }
+                                catch ( Exception )
+                                {
+                                    Console.WriteLine( "Could not remove " + t + " or " + ci );
+                                }
+                                ci++;
+                            }
+                            displayNotification( "All saved offline work requests have now been processed" );
+                            Console.WriteLine("Completed saved requests. Now on " + this.savedRequests.Count() );
+                            processingSavedRequests = false;
+                        }
 
                     }
 
@@ -243,16 +270,7 @@ namespace advanced_ckey
                 catch (Exception r )
                 {
                     Console.Write(r.Message);
-/* 
-                    if (helper.iswaiting == false)
-                    {
-                        helper.islogged = false;
-                        Program.GetClockInForm().setClockButtons();
-                        //  var k = new Formlog();
-                        Program.GetSignInForm().Show();
-
-                    }
- */                }
+                }
             }
             catch(Exception c )
             {

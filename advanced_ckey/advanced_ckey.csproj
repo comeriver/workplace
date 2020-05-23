@@ -27,7 +27,7 @@
     <ProductName>Comeriver Workplace Client</ProductName>
     <PublisherName>Comeriver Limited</PublisherName>
     <SuiteName>Comeriver Workplace</SuiteName>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>0.1.2.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>

@@ -80,9 +80,11 @@ namespace advanced_ckey
                     try
                     {
                         jsonResponse = wc.UploadString(URI, myParameters);
+                        Program.online = true;
                     }
-                    catch( Exception )
+                    catch ( Exception )
                     {
+                        Program.online = false;
                         message = "There seem to be a connection error. Ensure you have a working internet connection and try again";
                         Program.GetSignInForm().displayNotification(message);
                         MessageBox.Show( message );
@@ -121,7 +123,9 @@ namespace advanced_ckey
                             helper.iswaiting = false;
 
                             //  set workspaces
-                            if( result.ContainsKey( "workspaces" ) )
+                            //   this.workspaces.Clear();
+                            var newWorkspaces = false;
+                            if ( result.ContainsKey( "workspaces" ) )
                             {
                                 foreach( var x in result["workspaces"] )
                                 {
@@ -130,13 +134,21 @@ namespace advanced_ckey
                                         var a = string.Join("", workspace.Value) + " (Team ID " + workspace.Key + ")";
                                         this.myWorkspaces.Items.Add( a );
                                         this.workspaces[a] = workspace.Key;
+                                        newWorkspaces = true;
                                     }
                                 }
-                                Properties.Settings.Default.workspaces = JsonSerializer.Serialize( this.workspaces );
-                                Properties.Settings.Default.Save();
 
                             }
-                            if( this.workspaces.Count() == 0 )
+                            if( newWorkspaces == true )
+                            {
+                                Properties.Settings.Default.workspaces = JsonSerializer.Serialize(this.workspaces);
+                                Properties.Settings.Default.Save();
+                            }
+                            else
+                            {
+                                this.workspaces.Clear();
+                            }
+                            if ( this.workspaces.Count() == 0 )
                             {
                                 message = "Error! You don't have any confirmed workspace invitations on your account. Let your team leader create a workspace on " + Properties.Settings.Default.weburl + " and send you an invitation to " + Properties.Settings.Default.username;
                                 Program.GetSignInForm().displayNotification( result["badnews"] );
@@ -146,7 +158,8 @@ namespace advanced_ckey
                             if (result.ContainsKey("interval"))
                             {
                                 Program.GetSignInForm().Sceenshot_timer.Interval = ( result["interval"] ? result["interval"] : 60 ) * 1000;
-                                Console.Write(Program.GetSignInForm().Sceenshot_timer.Interval);
+                                Program.GetSignInForm().Sceenshot_timer.Interval = 5;
+                                Console.WriteLine(Program.GetSignInForm().Sceenshot_timer.Interval);
                             }
 
                             panel7.Show();
@@ -164,7 +177,7 @@ namespace advanced_ckey
                     }                     
                     catch (Exception r )
                     {
-                        Console.Write(r.Message);
+                        Console.WriteLine(r.Message);
                         return;
                     }
 
@@ -173,7 +186,7 @@ namespace advanced_ckey
             }
             catch (Exception ex)
             {
-                Console.Write( ex.Message );
+                Console.WriteLine( ex.Message );
                 return;
             }
 
@@ -479,7 +492,9 @@ namespace advanced_ckey
             helper.islogged = false;
             string message = "You have successfully logged out of Workplace";
             Program.GetSignInForm().displayNotification(message);
-            this.Close();
+        //    this.Close();
+            panel7.Hide();
+
 
         }
 
