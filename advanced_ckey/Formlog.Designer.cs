@@ -320,7 +320,7 @@
             // button2
             // 
             this.button2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button2.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.button2.BackColor = System.Drawing.Color.DarkOrange;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -336,7 +336,7 @@
             // 
             // panel8
             // 
-            this.panel8.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.panel8.BackColor = System.Drawing.Color.DarkOrange;
             this.panel8.Controls.Add(this.label2);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel8.ForeColor = System.Drawing.SystemColors.ControlLight;
