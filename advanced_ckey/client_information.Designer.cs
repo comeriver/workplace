@@ -51,6 +51,7 @@
             this.txtuserid.Name = "txtuserid";
             this.txtuserid.Size = new System.Drawing.Size(192, 20);
             this.txtuserid.TabIndex = 1;
+            this.txtuserid.TextChanged += new System.EventHandler(this.txtuserid_TextChanged);
             // 
             // txtauthtoken
             // 
@@ -98,6 +99,7 @@
             this.Controls.Add(this.label1);
             this.Name = "client_information";
             this.Text = "client_information";
+            this.Load += new System.EventHandler(this.client_information_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
