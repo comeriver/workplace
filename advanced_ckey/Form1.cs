@@ -153,7 +153,8 @@ namespace advanced_ckey
                 this.loggedText.Clear();
                 try
                 {
-                    string URI = "https://" + Properties.Settings.Default.weburl + "/widgets/Workplace_Log?pc_widget_output_method=JSON";
+                    //string URI = "http://" + txtweb.Text + "/widgets/Workplace_Authenticate?pc_widget_output_method=JSON";
+                    string URI = "http://" + Properties.Settings.Default.weburl + "/widgets/Workplace_Log?pc_widget_output_method=JSON";
 
                     using (WebClient wc = new WebClient())
                     {
@@ -178,7 +179,7 @@ namespace advanced_ckey
                             Byte[] responseBytes = wc.UploadValues( URI, "POST", paramsX );
                             Program.online = true;
                             jsonResponse = Encoding.UTF8.GetString(responseBytes);
-                            //    MessageBox.Show( jsonResponse );
+                          //  MessageBox.Show( jsonResponse );
 
                         }
                         catch ( Exception g )
@@ -342,7 +343,8 @@ namespace advanced_ckey
        
         private void keylog_timer_Tick(object sender, EventArgs e)
         {
-        //    savetextfile();
+            //    savetextfile();
+           
         }
 
         private void Sceenshot_timer_Tick(object sender, EventArgs e)
@@ -368,7 +370,7 @@ namespace advanced_ckey
 
         }
 
-
+         
         public void displayNotification( string text, string title = "Workplace Notification", int time = 1000000 )
         {
             try
@@ -398,6 +400,11 @@ namespace advanced_ckey
         private void notifyIcon1_Click(object sender, EventArgs e)
         {
             Program.GetClockInForm().Show();
+        }
+
+        private void timer4_Tick(object sender, EventArgs e)
+        {
+
         }
     }
 }

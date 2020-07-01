@@ -62,6 +62,10 @@
             this.timer1.Interval = 1;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // timer4
+            // 
+            this.timer4.Tick += new System.EventHandler(this.timer4_Tick);
+            // 
             // Sceenshot_timer
             // 
             this.Sceenshot_timer.Interval = 60000;

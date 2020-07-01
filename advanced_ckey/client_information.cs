@@ -32,5 +32,15 @@ namespace advanced_ckey
 
             Properties.Settings.Default.username = textBox1.Text;
         }
+
+        private void client_information_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtuserid_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -63,6 +63,11 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel7 = new System.Windows.Forms.Panel();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.myWorkspaceLabel = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -75,11 +80,13 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.txtweb = new System.Windows.Forms.TextBox();
             this.txturl = new System.Windows.Forms.TextBox();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
+            this.panel9.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -104,6 +111,7 @@
             this.passw.Size = new System.Drawing.Size(92, 24);
             this.passw.TabIndex = 1;
             this.passw.Text = "Password";
+            this.passw.Click += new System.EventHandler(this.passw_Click);
             // 
             // button1
             // 
@@ -156,6 +164,7 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(550, 64);
             this.panel1.TabIndex = 7;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel1_MouseDown_1);
             // 
             // Login
@@ -167,6 +176,7 @@
             this.Login.Size = new System.Drawing.Size(297, 33);
             this.Login.TabIndex = 0;
             this.Login.Text = "Comeriver Workplace";
+            this.Login.Click += new System.EventHandler(this.Login_Click);
             // 
             // panel3
             // 
@@ -249,7 +259,6 @@
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(284, 43);
             this.panel6.TabIndex = 12;
-            this.panel6.Click += new System.EventHandler(this.Panel6_Click);
             // 
             // timer1
             // 
@@ -260,6 +269,8 @@
             // panel7
             // 
             this.panel7.BackColor = System.Drawing.SystemColors.Window;
+            this.panel7.Controls.Add(this.panel9);
+            this.panel7.Controls.Add(this.label3);
             this.panel7.Controls.Add(this.myWorkspaceLabel);
             this.panel7.Controls.Add(this.button5);
             this.panel7.Controls.Add(this.button4);
@@ -270,6 +281,56 @@
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(550, 397);
             this.panel7.TabIndex = 13;
+            this.panel7.Paint += new System.Windows.Forms.PaintEventHandler(this.panel7_Paint);
+            // 
+            // panel9
+            // 
+            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel9.Controls.Add(this.textBox1);
+            this.panel9.Controls.Add(this.label5);
+            this.panel9.Controls.Add(this.label4);
+            this.panel9.Location = new System.Drawing.Point(289, 87);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(250, 225);
+            this.panel9.TabIndex = 15;
+            this.panel9.Visible = false;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(19, 76);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(216, 127);
+            this.textBox1.TabIndex = 2;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(92, 36);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(0, 20);
+            this.label5.TabIndex = 1;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(74, 7);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(103, 13);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Workspace Mesage";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.label3.Location = new System.Drawing.Point(455, 133);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(0, 13);
+            this.label3.TabIndex = 14;
+            this.label3.Visible = false;
             // 
             // myWorkspaceLabel
             // 
@@ -315,6 +376,7 @@
             this.myWorkspaces.Name = "myWorkspaces";
             this.myWorkspaces.Size = new System.Drawing.Size(323, 150);
             this.myWorkspaces.TabIndex = 11;
+            this.myWorkspaces.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.myWorkspaces_ItemCheck);
             this.myWorkspaces.SelectedIndexChanged += new System.EventHandler(this.MyWorkspaces_SelectedIndexChanged);
             // 
             // button2
@@ -403,7 +465,7 @@
             this.txtweb.ReadOnly = true;
             this.txtweb.Size = new System.Drawing.Size(253, 28);
             this.txtweb.TabIndex = 1;
-            this.txtweb.Text = "workplace.comeriver.com";
+            this.txtweb.Text = "localhost/pageCarton";
             this.txtweb.Enter += new System.EventHandler(this.Txtweb_Enter);
             this.txtweb.Leave += new System.EventHandler(this.Txtweb_Leave);
             // 
@@ -418,6 +480,10 @@
             this.txturl.Size = new System.Drawing.Size(253, 28);
             this.txturl.TabIndex = 1;
             this.txturl.Text = "e.g comeriver.com";
+            // 
+            // timer2
+            // 
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // Formlog
             // 
@@ -452,6 +518,8 @@
             this.panel6.PerformLayout();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
+            this.panel9.ResumeLayout(false);
+            this.panel9.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -493,5 +561,11 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TextBox txtweb;
         private System.Windows.Forms.TextBox txturl;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBox1;
     }
 } 
